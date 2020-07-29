@@ -1,7 +1,21 @@
-{% extends "case_view.html" %}
+{%- from "moj/components/side-navigation/macro.njk" import mojSideNavigation -%}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% extends "case.html" %}
 {% block sub_content %}
   <div class="govuk-grid-row">
-  {%- from "moj/components/side-navigation/macro.njk" import mojSideNavigation -%}
+    <div class="govuk-grid-column-two-thirds tfm">  
+      <p class="header-label">Credit analysis</p>
+    </div>
+    <div class="govuk-grid-column-one-third tfm">  
+
+      {{ govukButton({
+        text: "Submit for Approval"
+      }) }}
+    </div>
+    
+  </div>
+  <div class="govuk-grid-row">
 
   <div class="govuk-grid-column-one-quarter tfm">
 

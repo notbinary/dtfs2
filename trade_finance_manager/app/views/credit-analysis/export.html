@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{%- from "govuk/components/textarea/macro.njk" import govukTextarea -%}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds" style="margin: 0 220px">
+
+            <h1 class="govuk-heading-xl">About the export</h1>
+
+            {{ govukTextarea({
+            name: "more-detail",
+            id: "more-detail",
+            label: {
+                text: "Describe the contract between the exporter and the buyer",
+                classes: "govuk-label",
+                isPageHeading: false
+            }
+            }) }}
+            {{ govukTextarea({
+            name: "more-detail",
+            id: "more-detail",
+            label: {
+                text: "Enter payment terms and milestones",
+                classes: "govuk-label",
+                isPageHeading: true
+            }
+            }) }}
+            {{ govukTextarea({
+            name: "more-detail",
+            id: "more-detail",
+            label: {
+                text: "Enter the buyer's ability to pay",
+                classes: "govuk-label",
+                isPageHeading: false
+            }
+            }) }}
+      
+{{ govukTextarea({
+id: 'body',
+name: 'body',
+classes: 'js-editor',
+label: {
+text: 'Message',
+classes: 'govuk-label'
+}
+}) }} 
+            {{ govukTextarea({
+            name: "more-detail",
+            id: "more-detail",
+            label: {
+                text: "Enter the exporter's ability to perform as a business",
+                classes: "govuk-label",
+                isPageHeading: false
+            }
+            }) }}
+        </div>
+    </div>
+        <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters" style="margin:-20px 220px">
+{% from "moj/components/button-menu/macro.njk" import mojButtonMenu %}
+
+{{ mojButtonMenu({
+items: [{
+text: "Save and back to credit analysis",
+href: "/credit-analysis"
+}, {
+text: "Continue to bank relationship",
+href: "/credit-analysis/bank-relationship",
+classes: "govuk-button--secondary"
+}, {
+text: "Cancel",
+href: "#",
+classes: "govuk-link"
+}]
+}) }} 
+        </div></div>
+{% endblock %}
