@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block beforeContent %}
+<div style="margin:10px;">
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "C0345",
+      href: "tasks"
+    },
+    {
+      text: "credit analysis",
+      href: "/cases/credit-analysis"
+    },
+    {
+      text: "debts"
+    }
+  ]
+}) }}
+</div>
+
+{% endblock %}

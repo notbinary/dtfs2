@@ -4,6 +4,27 @@
 {%- from "govuk/components/date-input/macro.njk" import govukDateInput -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 
+{% block beforeContent %}
+<div style="margin:10px;">
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "C0345",
+      href: "tasks"
+    },
+    {
+      text: "credit analysis",
+      href: "/cases/credit-analysis"
+    },
+    {
+      text: "bank relationship"
+    }
+  ]
+}) }}
+</div>
+
+{% endblock %}
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds" style="margin: 0 220px">
