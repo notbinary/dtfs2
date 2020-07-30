@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Trade Finance Manager
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column" style='margin-left: 20px;'>
+      <h1 class="govuk-heading-xl">
+        Cases
+      </h1>
+        {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+        {{ mojSubNavigation({
+        label: 'Sub navigation',
+        items: [{
+        text: 'Open',
+        href: 'cases_open.html',
+        active: selected=='cases_open'
+        }, {
+        text: 'Closed',
+        href: 'cases_closed.html',
+        active: selected=='cases_closed'
+        }]
+        }) }}
+
+ </div>
+ </div>
+ <div style='margin-left: 20px;'>
+ {% block sub_content %}
+  {% endblock %}
+  </div>
+     {% endblock %}

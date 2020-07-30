@@ -3,6 +3,9 @@ const request = require('request')
 const fs = require('fs');
 const router = express.Router()
 
+router.get('/cases', function(req, res){
+    res.redirect('/cases/cases_open');
+});
 
 // Add your routes here - above the module.exports line
 router.get('/salesforce/new_task', function(req, res){

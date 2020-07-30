@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  C0345
+{% endblock %}
+
+{% block beforeContent %}
+  <div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column-full case-summary">
+      <table style="margin:20px">
+        <tr>
+          <th>
+            <h3>C0345</h3>
+          </th>
+          <th>Love to Learn Ltd</th>
+          <th>{{ extensionConfig.stylesheets.Count }}</th>
+          <td>Case actions</td>
+        </tr>
+        <tr>
+          <td>Type of work</td>
+          <td>
+            <label style="background-color:light-blue">Manual Inclusion Application</label>
+          </td>
+          <td>Date received</td>
+          <td>16 Dec 2019</td>
+        </tr>
+        <tr>
+          <td>Exporter</td>
+          <td>
+            <u>Love to Learn Ltd</u>
+          </td>
+          <td>Underwriter</td>
+          <td>Nigel Horwood</td>
+        </tr>
+        <tr>
+          <td>Total export value</td>
+          <td>GBP 3,468,195.18</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Additional UKEF exposure</td>
+          <td>GBP 2,774,556.14</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Guarantee types</td>
+          <td>BSS</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="tfm tfm-width">
+  {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
+
+  {{ mojSubNavigation({
+  label: 'Sub navigation',
+  items: [{
+  text: 'Tasks',
+  href: 'tasks',
+  active: selected=='tasks'
+  }, {
+  text: 'Deal',
+  href: 'deals',
+  active: selected=='deals'
+  }, {
+  text: 'Exposure',
+  href: 'exposure',
+  active: selected=='exposure'
+  }, {
+  text: 'Pricing',
+  href: 'pricing',
+  active: selected=='pricing'
+  }, {
+  text: 'Agent',
+  href: 'agent',
+  active: selected=='agent'
+  }, {
+  text: 'Adverse History',
+  href: 'adverse-history',
+  active: selected=='adverse-history'
+  }, {
+  text: 'Credit Analysis',
+  href: 'credit-analysis',
+  active: selected=='credit-analysis'
+  }]
+  }) }}
+
+  {% block sub_content %}
+  {% endblock %}
+ </div> 
+      {% endblock %}

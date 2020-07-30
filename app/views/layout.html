@@ -39,34 +39,9 @@
 {% endblock %}
 
 {% block header %}
-<div class="tfm">
-  {# {% include "includes/cookie-banner.html" %} #}
-  {# Set serviceName in config.js. #}
+{% include "includes/header.html" %}
+{% include "includes/primary-navigation.html" %}
 
-
-  {{ mojHeader({
-      organisationLabel: {
-      text: 'UK Export\n Finance',
-      href: '#'
-    },
-    serviceLabel: {
-      text: 'Trade Finance Manager',
-      href: '#'
-    },
-    navigation: {
-      label: 'Account navigation',
-      items: [{
-        text: 'Diana Prince',
-        href: '#',
-        active: true
-        }, {
-          text: 'Sign out',
-          href: '#'
-      }]
-    }
-
-  }) }} 
-</div>
 {% endblock %}
 
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
