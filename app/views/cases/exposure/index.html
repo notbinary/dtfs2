@@ -1,9 +1,32 @@
+    {%- from "moj/components/task-list/macro.njk" import mojTaskList -%}
+{%- from "moj/components/task-list/macro.njk" import mojTaskList -%}
+
 {% extends "cases/case.html" %}
 {% set selected = 'exposure' %}
 {% block sub_content %}
+<h1>Exposure</h1>
+<div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column-full">
+{{ mojTaskList({
+sections: [
+{
+  heading: {
+    text: 'Exposure check'
+  },
+  items: [{
+    text: 'Are you satisfied with the level of exposure this case will add?',
+    href: 'exposure/pricing-check',
+    complete: false
+  }]
+}
+]
+}) }}
+</div> 
+</div>
 <div class="govuk-grid-row tfm tfm-width">
     <div class="govuk-grid-column-one-quarter">
-    <h1>Exposure</h1>
+
+
       <table>
         <tr>
           <th colspan="2" style="text-align:left">UKEF exposure</td>
