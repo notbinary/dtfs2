@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block beforeContent %}
+<div style="margin:10px;">
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "C0345",
+      href: "tasks"
+    },
+    {
+      text: "pricing",
+      href: "/cases/pricing"
+    },
+    {
+      text: "loss given default"
+    }
+  ]
+}) }}
+</div>
+
+{% endblock %}
+{% block content %}
+    <div class="govuk-form-group tfm" style="margin-left:20px;">
+    <h1>What is the loss given default?</h1>
+<span class="moj-label__currency">%</span>
+<input class="govuk-input moj-input__currency govuk-input--width-5" id="amount-1" name="amount" type="text" autocomplete="off" pattern="[0-9]*" >
+</input>
+</div> 
+
+    <div class="govuk-grid-row tfm tfm-width">
+      <div class="govuk-grid-column-one-quarter flex-container" style="margin: 10px;">
+        <a class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</a>
+        <a href="/cases/pricing" style="margin: 10px;">Cancel</a>
+      </div>
+    </div>
+{% endblock %}
