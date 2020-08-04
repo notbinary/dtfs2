@@ -3,7 +3,7 @@
 {% block sub_content %}
 <div class="govuk-grid-row tfm tfm-width">
     <div class="govuk-grid-column-two-thirds">
-          <h1>Tasks</h1>
+          <p class="header-label">Tasks</p>
       {%- from "moj/components/task-list/macro.njk" import mojTaskList -%}
       {{ mojTaskList({
         sections: [
@@ -41,7 +41,7 @@
       }) }}
     </div>
     <div class="govuk-grid-column-one-third">
-      <h1>Activity</h1>
+      <p class="header-label">Activity</p>
       <div class="moj-timeline">
         <div class="moj-timeline__item">
 
