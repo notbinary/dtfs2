@@ -33,6 +33,7 @@
   .case-exposure td, .case-exposure th {
      width:140px;
      text-align: left;
+}
   }
 
   .case-exposure td:nth-child(1),.case-exposure th:nth-child(1){
@@ -41,31 +42,35 @@
   .case-exposure td:nth-child(2),.case-exposure th:nth-child(2) {
    width: 60px;
   }
-    .case-exposure td:nth-child(3),.case-exposure th:nth-child(3) {
+  .case-exposure td:nth-child(3),.case-exposure th:nth-child(3) {
    width: 100px;
   }
   .case-exposure td:nth-child(4),.case-exposure th:nth-child(4) {
    width: 100px;
   }
-    .case-exposure td:nth-child(6),.case-exposure th:nth-child(6) {
+  .case-exposure td:nth-child(6),.case-exposure th:nth-child(6) {
    width: 100px;
   }
-      .case-exposure td:nth-child(7),.case-exposure th:nth-child(7) {
+  .case-exposure td:nth-child(7),.case-exposure th:nth-child(7) {
    width: 180px;
   }
-        .case-exposure td:nth-child(8),.case-exposure th:nth-child(8) {
+  .case-exposure td:nth-child(8),.case-exposure th:nth-child(8) {
    width: 180px;
   }
-          .case-exposure td:nth-child(9),.case-exposure th:nth-child(9) {
+  .case-exposure td:nth-child(9),.case-exposure th:nth-child(9) {
    width: 200px;
   }
    .existing-facility tr {
-    height: 46px;
+    height: 50px;
+
   }
   .existing-facility td, .existing-facility th {
-     width:180px;
-     text-align: left;
-     padding: 10px 10px;
+    width:180px;
+    text-align: left;
+    padding: 10px 10px;
+    border-bottom-style: inset;
+      border-bottom-width: 2px;
+      border-bottom-color: lightgray;
   }
 
   .existing-facility td:nth-child(6),.existing-facility th:nth-child(6) {
@@ -111,5 +116,120 @@
   .moj-primary-navigation__container {
     max-width: 1440px;
   }
+
+  .separator-line {
+    border-top-style: solid;
+
+  }
+  .pricing table {
+    width: 100%;
+    text-align: left;
+    margin-bottom:50px;
+    cellspacing: 0;
+    border-collapse:collapse;
+  }
+    .pricing td:nth-child(1), .pricing th:nth-child(1) {
+    width:120px;
+  }
+    .pricing td:nth-child(2), .pricing th:nth-child(2) {
+    width:150px;
+  }
+    .pricing td:nth-child(3), .pricing th:nth-child(3) {
+    width:220px;
+  }
+   .pricing td:nth-child(4), .pricing th:nth-child(4) {
+    width:220px;
+  }
+  .pricing td:nth-child(6), .pricing th:nth-child(6) {
+    width:80px;
+  }
+  .pricing tr {
+    height: 50px;
+
+  }
+  .pricing td {
+    border-bottom: thin solid;
+    border-top: thin solid;
+    border-color: lightgray;
+  }
+
+@mixin label ($label-background: #DEE0E2, $label-border: #CBCBCB, $label-text: #0B0C0C) {
+    background: $label-background;
+    color: #FFF;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 5px 3px 5px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+}
+.label {
+    @include label(#6F777B, #0B0C0C)
+}
+.label--white {
+    @include label(#FFF)
+    color: #0B0C0C;
+    border: 1px solid #CBCBCB;
+}
+.label--blue {
+    background: #005EA5;
+    color: #FFF;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 5px 3px 5px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.label--green {
+    background: #00703c;
+    color: #FFF;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 5px 3px 5px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+
+}
+
+.label--graygreen {
+    background: #CCE2D9;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 10px 3px 10px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+
+}
+
+.label--red {
+      background: #B10E1E;
+    color: #FFF;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 5px 3px 5px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+@media (max-width: 641px) {
+  .label, .label--white, .label--blue, .label--red {
+    font-size: .85rem;
+  }
+}
 </style>
 
