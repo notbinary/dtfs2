@@ -14,7 +14,7 @@
       href: "/cases/pricing"
     },
     {
-      text: "risk profile"
+      text: "credit rating"
     }
   ]
 }) }}
@@ -27,24 +27,27 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
         {{ govukRadios({
-        classes: "govuk-radios--inline",
         idPrefix: "changed-name",
         name: "changed-name",
         fieldset: {
             legend: {
-            text: "What is the risk profile for the guarantee 0020010552?",
+            text: "Select credit rating for this case",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
             }
         },
         items: [
             {
-            value: "flat",
-            text: "Flat"
+            value: "good",
+            text: "Good (BB-)"
             },
             {
-            value: "variable",
-            text: "Variable"
+            value: "acceptable",
+            text: "Acceptable (B+)"
+            },
+            {
+            value: "other",
+            text: "Other"
             }
         ]
         }) }}

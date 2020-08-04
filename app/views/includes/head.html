@@ -13,12 +13,16 @@
       font-family: Helvetica;
       font-size: 16px;
   }
-  .case-summary td:nth-child(2n+1) {  
+  .case-summary td:nth-child(1),case-summary th:nth-child(1) {  
     font-weight: bold;
-    width: 300px;
+    width: 100px;
   }
-  .case-summary td:nth-child(2n) {  
-    width: 600px;
+  .case-summary td:nth-child(3),case-summary th:nth-child(3) {  
+    font-weight: bold;
+    width: 200px;
+  }
+  .case-summary td:nth-child(2) {  
+    width: 500px;
   }
   .case-summary th {
     text-align: left;
@@ -102,7 +106,7 @@
   }
   .header-label {
       height: 50px;
-      width: 342px;
+      width: 400px;
       color: #241F20;
       font-family: Helvetica;
       font-size: 48px;
@@ -173,6 +177,18 @@
     color: #0B0C0C;
     border: 1px solid #CBCBCB;
 }
+.label--yellow {
+    background: #FFF7BF;
+        color: #0B0C0C;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px 5px 3px 5px;
+    margin: 0 calc(2 * #{5px}) 5px 5px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+}
 .label--blue {
     background: #005EA5;
     color: #FFF;
@@ -210,7 +226,7 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
-
+    color: #0B0C0C;
 }
 
 .label--red {
@@ -231,5 +247,10 @@
     font-size: .85rem;
   }
 }
+
+.flex-container {
+  display: flex;
+}
+
 </style>
 
