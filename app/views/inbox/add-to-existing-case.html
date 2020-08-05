@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<p class="header-label">Select and existing case</p>
-<div>
+    <div class="govuk-grid-row tfm">
+      <div class="govuk-grid-column-full" style="margin: 10px;">
+<p class="header-label">Add to an existing case</p>
+      </div>
+    </div>
+    <div class="govuk-grid-row tfm">
+      <div class="govuk-grid-column-full" style="margin: 10px;">
 <table  class="govuk-table tfm tfm-width" style="margin:10px;">
 <tbody class="govuk-table__body">
 <tr class="govuk-table__row">
@@ -23,6 +27,42 @@
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+    <div class="govuk-grid-row tfm">
+      <div class="govuk-grid-column-full" style="margin: 10px;">
+<h2>Select an existing case</h2>
+<table class="govuk-table tfm tfm-width" style="margin:10px;">
+         <tr>
+             <th>Courier</th>
+             <th>Service</th>
+         </tr>
+         <tr>
+             <td>
+                 <div class="radio">
+                     <label><input type="radio" id='regular' name="optradio">TIKI</label>
+                 </div>
+             </td>
+             <td>
+             <div class="radiotext">
+                 <label for='regular'>Regular Shipping</label>
+             </div>
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <div class="radio">
+                     <label><input type="radio" id='express' name="optradio">JNE</label>
+                </div>
+             </td>
+             <td>
+                 <div class="radiotext">
+                     <label for='express'>Express Shipping</label>
+                 </div>
+             </td>
+         </tr>
+</table>
+</div>
 </div>
     <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-one-third flex-container" style="margin: 10px;">
