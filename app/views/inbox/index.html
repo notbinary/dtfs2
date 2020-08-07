@@ -2,7 +2,7 @@
 {% block content %}
 {% set primary = 'inbox' %}
 <div class="govuk-grid-row tfm tfm-width">
-    <div class="govuk-grid-column-full" style="margin-left:10px;">
+    <div class="govuk-grid-column-full">
         <p class="header-label">Inbox</p>
 
         {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="govuk-grid-row tfm tfm-width">
-    <div class="govuk-grid-column-two-thirds" style="padding-left:20px;">
+    <div class="govuk-grid-column-two-thirds">
 
        
         <div>
@@ -41,7 +41,7 @@
         text: "Create a case",
         href: "/inbox/create_case"
         }, {
-        text: "Add to and existing case",
+        text: "Add to an existing case",
         href: "/inbox/add-to-existing-case",
         classes: "govuk-button--secondary"
         }]

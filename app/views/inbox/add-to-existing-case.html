@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="govuk-grid-row tfm">
-      <div class="govuk-grid-column-full" style="margin: 10px;">
+      <div class="govuk-grid-column-full">
 <p class="header-label">Add to an existing case</p>
       </div>
     </div>
     <div class="govuk-grid-row tfm">
-      <div class="govuk-grid-column-full" style="margin: 10px;">
-<table  class="govuk-table tfm tfm-width" style="margin:10px;">
+      <div class="govuk-grid-column-full">
+<table  class="govuk-table tfm tfm-width">
 <tbody class="govuk-table__body">
 <tr class="govuk-table__row">
     <td class="govuk-table__cell"></td>
@@ -30,9 +30,9 @@
 </div>
 </div>
     <div class="govuk-grid-row tfm tfm-width add-to-case">
-      <div class="govuk-grid-column-full" style="margin: 10px;">
+      <div class="govuk-grid-column-full">
 <h2>Select an existing case</h2>
-<table class="govuk-table tfm tfm-width" style="margin:10px;">
+<table class="govuk-table tfm tfm-width" >
          <tr class="govuk-table__row">
              <th class="govuk-table__cell">Case ref</th>
              <th class="govuk-table__cell">Type of work</th>
@@ -43,7 +43,7 @@
          </tr>
          <tr class="govuk-table__row">
             <td>
-                <input type="radio" id='regular' name="optradio"><a href="#">C0198</a>
+                <input type="radio" id='regular' class="tfm-radio" name="optradio"><a href="#">C0198</a>
             </td>
             <td>
                 <span class="label--graygreen">MIA</span>
@@ -63,7 +63,7 @@
          </tr>
          <tr>
              <td>
-                <input type="radio" id='regular' name="optradio"><a href="#">C0234</a>
+                <input type="radio" id='regular' class="tfm-radio" name="optradio"><a href="#">C0234</a>
              </td>
              <td>
                 <span class="label--graygreen">MIA</span>
@@ -78,8 +78,8 @@
 </div>
     <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-one-third flex-container" style="margin: 10px;">
-        <a class="govuk-button" data-module="govuk-button" href="/inbox">Confirm and continue</a>
-        <a href="/inbox" style="margin: 10px;">Cancel</a>
+        <a class="govuk-button" data-module="govuk-button" href="/cases/tasks">Continue</a>
+        <a href="/inbox" class="cancel-link">Cancel</a>
       </div>
     </div>
 {% endblock%}

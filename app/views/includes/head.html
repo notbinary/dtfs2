@@ -9,28 +9,32 @@
   .case-summary {
       background-color:#1D70B8; 
       color: white; 
-      padding:10px 20px; 
       font-family: Helvetica;
       font-size: 16px;
   }
+
   .case-summary td:nth-child(1),case-summary th:nth-child(1) {  
     font-weight: bold;
-    width: 100px;
+    width: 300px;
   }
+  .case-summary td:nth-child(2), .case-summary th:nth-child(2) {  
+    width: 700px;
+  }
+
   .case-summary td:nth-child(3),case-summary th:nth-child(3) {  
     font-weight: bold;
     width: 200px;
   }
-  .case-summary td:nth-child(2) {  
-    width: 500px;
-  }
+
   .case-summary th {
     text-align: left;
   }
   .case-summary tr {
-    height:35px;
-  }
-
+    height: 35px  
+}
+.case-summary table {
+ margin: 20px 0;
+}
   .case-exposure tr {
     height: 46px;
   }
@@ -112,6 +116,17 @@
   }
   .tfm-width {
     width: 1440px;
+  }
+  .tfm-radio {
+    width: 20px;
+    height: 20px;
+    color: yellow;
+    background-color: green;
+  }
+  .cancel-link {
+      font-size: 19px;
+      margin:8px 20px;
+      vertical-align: middle;
   }
   .header-label {
       height: 50px;
@@ -295,6 +310,19 @@
 .flex-container {
   display: flex;
 }
+
+.moj-primary-navigation__container {
+  margin: 0 30px;
+}
+
+.govuk-grid-row {
+  margin-left: 0;
+}
+
+.govuk-grid-column-full, .govuk-grid-column-two-thirds, .govuk-grid-column-three-quarters,  .govuk-grid-column-one-quarter {
+  padding: 0 30px;
+}
+
 svg > g > g:last-child { pointer-events: none }
 </style>
 

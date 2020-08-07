@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
 <p class="header-label">Create a case</p>
 <p>Confirm you want to create a new case for the following manual inclusion application.</p>
-<div>
-<table  class="govuk-table tfm tfm-width" style="margin:10px;">
+
+<table  class="govuk-table tfm tfm-width" >
 <tbody class="govuk-table__body">
 <tr class="govuk-table__row">
     <td class="govuk-table__cell"></td>
@@ -23,9 +25,6 @@
 </tr>
 </tbody>
 </table>
-</div>
-    <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-third flex-container" style="margin: 10px;">
         <a class="govuk-button" data-module="govuk-button" href="/cases/tasks">Confirm and continue</a>
         <a href="/inbox" style="margin: 10px;">Cancel</a>
       </div>
