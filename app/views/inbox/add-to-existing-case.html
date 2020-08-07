@@ -29,37 +29,49 @@
 </table>
 </div>
 </div>
-    <div class="govuk-grid-row tfm">
+    <div class="govuk-grid-row tfm tfm-width add-to-case">
       <div class="govuk-grid-column-full" style="margin: 10px;">
 <h2>Select an existing case</h2>
 <table class="govuk-table tfm tfm-width" style="margin:10px;">
-         <tr>
-             <th>Courier</th>
-             <th>Service</th>
+         <tr class="govuk-table__row">
+             <th class="govuk-table__cell">Case ref</th>
+             <th class="govuk-table__cell">Type of work</th>
+            <th class="govuk-table__cell">Exporter</th>
+            <th class="govuk-table__cell">Deal</th>
+            <th class="govuk-table__cell">Buyer</th>
+            <th class="govuk-table__cell">Bank</th>
+         </tr>
+         <tr class="govuk-table__row">
+            <td>
+                <input type="radio" id='regular' name="optradio"><a href="#">C0198</a>
+            </td>
+            <td>
+                <span class="label--graygreen">MIA</span>
+            </td>
+            <td>Love to Learn Ltd</td>
+            <td>0020010012</td>
+            <td>Republic of Asgard</td>
+            <td>Royal Bank of Scotland</td>
+         </tr>
+        <tr>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell">0020010013</td>
+            <td class="govuk-table__cell">Folding Circle</td>
+            <td class="govuk-table__cell">Royal Bank of Scotland</td>
          </tr>
          <tr>
              <td>
-                 <div class="radio">
-                     <label><input type="radio" id='regular' name="optradio">TIKI</label>
-                 </div>
+                <input type="radio" id='regular' name="optradio"><a href="#">C0234</a>
              </td>
              <td>
-             <div class="radiotext">
-                 <label for='regular'>Regular Shipping</label>
-             </div>
+                <span class="label--graygreen">MIA</span>
              </td>
-         </tr>
-         <tr>
-             <td>
-                 <div class="radio">
-                     <label><input type="radio" id='express' name="optradio">JNE</label>
-                </div>
-             </td>
-             <td>
-                 <div class="radiotext">
-                     <label for='express'>Express Shipping</label>
-                 </div>
-             </td>
+            <td>Love to Learn Ltd</td>
+            <td>0020010415</td>
+            <td>Beyond Corporation</td>
+            <td>HSBC</td>
          </tr>
 </table>
 </div>
