@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% block beforeContent %}
-<div style="margin:10px;">
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
 {{ govukBreadcrumbs({
   items: [
     {
       text: "C0345",
-      href: "tasks"
+      href: "/cases/tasks"
     },
     {
       text: "pricing",
@@ -18,19 +18,22 @@
   ]
 }) }}
 </div>
-
+</div>
 {% endblock %}
 {% block content %}
-    <div class="govuk-form-group tfm" style="margin-left:20px;">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-form-group tfm">
     <h1>What interest margin is the bank charging?</h1>
 <span class="moj-label__currency">%</span>
 <input class="govuk-input moj-input__currency govuk-input--width-5" id="amount-1" name="amount" type="text" autocomplete="off" pattern="[0-9]*" >
 </input>
 </div> 
-
+</div>
+</div>
     <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-quarter flex-container" style="margin: 10px;">
-        <button class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</button>
+      <div class="govuk-grid-column-one-quarter flex-container">
+        <a class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</button>
         <a href="/cases/pricing" style="margin: 10px;">Cancel</a>
       </div>
     </div>

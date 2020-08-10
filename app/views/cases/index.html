@@ -7,7 +7,7 @@
 
 {% block content %}
   <div class="govuk-grid-row tfm tfm-width">
-    <div class="govuk-grid-column" style='margin-left: 20px;'>
+    <div class="govuk-grid-column-full" >
       <h1 class="govuk-heading-xl">
         Cases
       </h1>
@@ -27,8 +27,10 @@
 
  </div>
  </div>
- <div style='margin-left: 20px;'>
+  <div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column-full" >
  {% block sub_content %}
   {% endblock %}
+  </div>
   </div>
      {% endblock %}

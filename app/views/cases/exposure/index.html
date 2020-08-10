@@ -22,48 +22,53 @@
       </div>
   </div>
 <div class="govuk-grid-row tfm tfm-width exposure-summary ">
-    <div class="govuk-grid-column-one-quarter separator-line">
+    <div class="govuk-grid-column-one-third separator-line">
 
 
       <table>
         <tr>
-          <th colspan="3" style="text-align:left"><p class="header-label">UKEF Exposure</p></td>
+          <th colspan="3" style="text-align:left"><h2>UKEF Exposure</h2></td>
         </tr>
         <tr>
           <td>Exporter's limit</td>
           <td/>
-          <td>GBP 10,000.00</td>
+          <td>GBP</td>
+          <td>10,000,000.00</td>
         </tr>
         <tr>
           <td>Issued guarantees</td>
           <td><span class="dot" style="background-color: #1D70B8"/></td>
-          <td>GBP 394,870.38</td>
+          <td>GBP</td>
+          <td>394,870.38</td>
         </tr>
         <tr>
           <td>Committed guarantees</td>
           <td><span class="dot" style="background-color: #F47738"/></td>
-          <td>GBP 5,714,285.71</td>
+          <td>GBP</td>
+          <td>5,714,285.71</td>
         </tr>
         <tr>
           <td>Other applications</td>
           <td><span class="dot" style="background-color: #912B88"/></td>
-          <td>GBP 0</td>
+          <td>GBP</td>
+          <td>0</td>
         </tr>
         <tr>
           <td>This application</td>
           <td><span class="dot" style="background-color: #28A197"/></td>
-          <td>GBP 3,468,195.18</td>
+          <td>GBP</td>
+          <td>3,468,195.18</td>
         </tr>
         <tr>
           <td>Remaining headroom</td>
           <td><span class="dot" style="background-color: #F3F2F1"/></td>
-          <td>GBP 422,648.73</td>
+          <td>GBP</td>
+          <td>422,648.73</td>
         </tr>
       </table>
     </div>
     <div class="govuk-grid-column-one-quarter separator-line">
-      <div id = "container" style = "width: 200px; height: 200px; margin: 0 auto; align:left;">
-    </div>
+      <div id = "container" style = "width: 200px; height: 200px; margin: 0 auto; align:left;"></div>
     <script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
       </script>
       <script type = "text/javascript">
@@ -76,7 +81,7 @@
             data.addColumn('string', 'Browser');
             data.addColumn('number', 'Percentage');
             data.addRows([
-               ['Issuesd guarantees', 394870.38],
+               ['Issued guarantees', 394870.38],
                ['Committed guarantees', 5714285.71],
                ['Other applications', 0],
                ['This application', 3468195.18],
@@ -87,7 +92,7 @@
             var options = {
              //  'title':'UKEF exposure',
                'colors': ['#1D70B8', '#F47738', '#912B88', '#28A197', '#F3F2F1'],
-               tooltip: { textStyle: { fontName: 'Helvetica', fontSize: 16 } }, 
+               tooltip: { textStyle: { fontName: 'Helvetica', fontSize: 16 }, text: 'value' }, 
                'width':250,
                'height':250,
                chartArea:{left:0,top:50,width:"100%",height:"100%"},
@@ -106,6 +111,7 @@
     </div>
     <div class="govuk-grid-column-one-quarter separator-line"/>
    </div>
+  </div>
 <div class="govuk-grid-row case-exposure tfm tfm-width">
    <div class="govuk-grid-column-full separator-line" style="margin-left:10px">
       <h2>New guarantee request</h2>
@@ -122,12 +128,12 @@
           <th>Exposure</th>
           <th>Expected loss</th>
         </tr>
-        <tr>
-          <td colspan="10" style="background-color:#F3F2F1;font-weight:bold;">
-            <a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence
+        <tr class= "table-line">
+          <td colspan="10" >
+            <span class="label--graygreen" style="background-color:#F3F2F1; padding-left: 0"><a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence</span>
           </td>
         </tr>
-        <tr>
+        <tr class= "table-line">
           <td><a href="#">0020010552</a></td>
           <td>BSS</td>
           <td>Underwriting</td>
@@ -150,7 +156,7 @@
    </div>
 </div>
 <div class="govuk-grid-row case-exposure tfm tfm-width">
-   <div class="govuk-grid-column-full separator-line" style="margin-left:10px">
+   <div class="govuk-grid-column-full separator-line">
       <h2>Existing guarantees UKEF has committed to</h2>
       <table>
         <tr>
@@ -165,12 +171,12 @@
           <th>Exposure</th>
           <th>Expected loss</th>
         </tr>
-        <tr>
-          <td colspan="10" style="background-color:#F3F2F1;font-weight:bold;">
-            <a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence
+        <tr class= "table-line">
+          <td colspan="10">
+            <span class="label--graygreen" style="background-color:#F3F2F1; padding-left: 0"><a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence</span>
           </td>
         </tr>
-        <tr>
+        <tr class= "table-line">
           <td><a href="#">0020010552</a></td>
           <td>BSS</td>
           <td>Underwriting</td>
@@ -182,12 +188,12 @@
           <td>GBP 2,774,566.14 (80%)</td>
           <td>2.45%</td>       
         </tr>
-        <tr>
-          <td colspan="10" style="background-color:#F3F2F1;font-weight:bold;">
-            <a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence
+        <tr class= "table-line">
+          <td colspan="10">
+            <span class="label--graygreen" style="background-color:#F3F2F1; padding-left: 0"><a href="#">0020010552</a> Provision of education services and material to Kingdom of Wakanda Colleges of Excellence</span>
           </td>
         </tr>
-        <tr>
+        <tr class= "table-line">
           <td><a href="#">0020010552</a></td>
           <td>BSS</td>
           <td>Underwriting</td>

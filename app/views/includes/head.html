@@ -35,47 +35,68 @@
 .case-summary table {
  margin: 20px 0;
 }
-  .case-exposure tr {
-    height: 46px;
+
+  .case-exposure table {
+    cellspacing: 0;
+    border-collapse:collapse;
   }
+  .case-exposure tr {
+    height: 50px;
+  }
+  .case-exposure td {
+    border-color: lightgray;
+  }
+  
   .case-exposure td, .case-exposure th {
      width:140px;
      text-align: left;
+     padding-top: 4px;
+     padding-bottom: 4px;
+     vertical-align: top;
 }
-  }
 
-  .case-exposure td:nth-child(1),.case-exposure th:nth-child(1){
+  .case-exposure td:nth-child(1), .case-exposure th:nth-child(1){
     width:100px;
   }
-  .case-exposure td:nth-child(2),.case-exposure th:nth-child(2) {
+  .case-exposure td:nth-child(2), .case-exposure th:nth-child(2) {
    width: 60px;
   }
-  .case-exposure td:nth-child(3),.case-exposure th:nth-child(3) {
+  .case-exposure td:nth-child(3), .case-exposure th:nth-child(3) {
+   width: 120px;
+  }
+  .case-exposure td:nth-child(4), .case-exposure th:nth-child(4) {
+   width: 140px;
+  }
+  .case-exposure td:nth-child(5), .case-exposure th:nth-child(5) {
    width: 100px;
   }
-  .case-exposure td:nth-child(4),.case-exposure th:nth-child(4) {
-   width: 100px;
+  .case-exposure td:nth-child(6), .case-exposure th:nth-child(6) {
+   width: 160px;
   }
-  .case-exposure td:nth-child(6),.case-exposure th:nth-child(6) {
-   width: 100px;
-  }
-  .case-exposure td:nth-child(7),.case-exposure th:nth-child(7) {
+  .case-exposure td:nth-child(7), .case-exposure th:nth-child(7) {
    width: 180px;
   }
-  .case-exposure td:nth-child(8),.case-exposure th:nth-child(8) {
+  .case-exposure td:nth-child(8), .case-exposure th:nth-child(8) {
    width: 180px;
   }
-  .case-exposure td:nth-child(9),.case-exposure th:nth-child(9) {
-   width: 200px;
+  .case-exposure td:nth-child(9), .case-exposure th:nth-child(9) {
+   width: 220px;
   }
   .exposure-summary tr {
     height:30px;
   }
   .exposure-summary td:nth-child(1),.exposure-summary th:nth-child(1) {
-   width: 170px;
+   width: 250px;
+  }
+ .exposure-summary td:nth-child(4),.exposure-summary th:nth-child(4) {
+    text-align:right;
   }
 
-
+  .table-line td, .table-line th {
+      border-bottom-style: inset;
+      border-bottom-width: 2px;
+      border-bottom-color: lightgray;
+  }
 
    .existing-facility tr {
     height: 50px;
@@ -102,8 +123,8 @@
     width: 1440px;
   }
   .dot {
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
@@ -319,7 +340,11 @@
   margin-left: 0;
 }
 
-.govuk-grid-column-full, .govuk-grid-column-two-thirds, .govuk-grid-column-three-quarters,  .govuk-grid-column-one-quarter {
+.govuk-grid-column-full, 
+.govuk-grid-column-two-thirds, 
+.govuk-grid-column-three-quarters, 
+.govuk-grid-column-one-quarter,
+.govuk-grid-column-one-third {
   padding: 0 30px;
 }
 

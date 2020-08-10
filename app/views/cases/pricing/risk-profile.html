@@ -1,13 +1,13 @@
 {% extends "layout.html"%}
 {% extends 'layout.html' %}
 {% block beforeContent %}
-<div style="margin:10px;">
-
+  <div class="govuk-grid-row tfm tfm-width">
+      <div class="govuk-grid-column-full">
 {{ govukBreadcrumbs({
   items: [
     {
       text: "C0345",
-      href: "tasks"
+      href: "/cases/tasks"
     },
     {
       text: "pricing",
@@ -19,12 +19,11 @@
   ]
 }) }}
 </div>
-
+</div>
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-half" style="margin: 20px;">
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+      <div class="govuk-grid-column-two-thirds">
 
         {{ govukRadios({
         classes: "govuk-radios--inline",
@@ -51,8 +50,8 @@
       </div>
   </div>
     <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-quarter flex-container" style="margin: 10px;">
-        <button class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</button>
+      <div class="govuk-grid-column-one-quarter flex-container">
+        <a class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</a>
         <a href="/cases/pricing" style="margin: 10px;">Cancel</a>
       </div>
     </div>
