@@ -5,7 +5,8 @@
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
 
 {% block beforeContent %}
-<div style="margin:10px;">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
 
 {{ govukBreadcrumbs({
   items: [
@@ -23,11 +24,11 @@
   ]
 }) }}
 </div>
-
+</div>
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds" style="margin: 0 220px">
+  <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Bank relationship</h1>
     {{ govukTextarea({
     name: "more-detail",
@@ -84,7 +85,7 @@
   </div>        
 </div>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full" style="margin:-20px 220px">
+  <div class="govuk-grid-column-full">
 {% from "moj/components/button-menu/macro.njk" import mojButtonMenu %}
 
 {{ mojButtonMenu({
@@ -92,12 +93,12 @@ items: [{
 text: "Save and back to credit analysis",
 href: "/cases/credit-analysis"
 }, {
-text: "Continue to existing facilities with banks and other organisations",
+text: "Continue to existing facilities",
 href: "/cases/credit-analysis/existing-facility",
 classes: "govuk-button--secondary"
 }, {
 text: "Cancel",
-href: "#",
+href: "/cases/credit-analysis",
 classes: "govuk-link"
 }]
 }) }} 

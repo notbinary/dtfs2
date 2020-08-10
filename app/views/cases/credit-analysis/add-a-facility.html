@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block beforeContent %}
-<div style="margin:10px;">
-
+<div class="govuk-grid-row tfm">
+  <div class="govuk-grid-column-full" >
 {{ govukBreadcrumbs({
   items: [
     {
@@ -18,11 +18,11 @@
   ]
 }) }}
 </div>
-
+</div>
 {% endblock %}
 {% block content %}
 <div class="govuk-grid-row tfm">
-  <div class="govuk-grid-column-two-thirds" style="margin: 0 20px">
+  <div class="govuk-grid-column-two-thirds" >
     <h1 class="govuk-heading-xl">Add an existing facility</h1>
 
 {%- from "moj/components/currency-input/macro.njk" import mojCurrencyInput -%}

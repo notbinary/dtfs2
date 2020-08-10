@@ -1,8 +1,8 @@
 {% extends "layout.html"%}
 {% extends 'layout.html' %}
 {% block beforeContent %}
-<div style="margin:10px;">
-
+  <div class="govuk-grid-row tfm tfm-width">
+      <div class="govuk-grid-column-full" >
 {{ govukBreadcrumbs({
   items: [
     {
@@ -19,11 +19,11 @@
   ]
 }) }}
 </div>
-
+</div>
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-half" style="margin: 20px;">
+      <div class="govuk-grid-column-two-thirds">
 
         {{ govukRadios({
         classes: "govuk-radios--inline",
@@ -60,7 +60,7 @@
       </div>
   </div>
     <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-quarter flex-container" style="margin: 10px;">
+      <div class="govuk-grid-column-one-quarter flex-container">
         <a class="govuk-button" data-module="govuk-button" href="/cases/credit-analysis">Submit to review</a>
         <a href="/cases/pricing" style="margin: 10px;">Cancel</a>
       </div>
