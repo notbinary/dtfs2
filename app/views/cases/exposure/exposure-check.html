@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block beforeContent %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "C0345",
+          href: "/cases/tasks"
+        },
+        {
+          text: "Exposure",
+          href: "/cases/exposure"
+        },
+        {
+          text: "Exposure check"
+        }
+      ]
+    }) }}
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+    
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+  {{ govukRadios({
+  classes: "govuk-radios--inline",
+  idPrefix: "confirm-exposure-level-acceptance",
+  name: "confirm-exposure-level-acceptance",
+  fieldset: {
+    legend: {
+      text: "Are you happy with the level of exposure this case will add?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--xl"
+    }
+  },
+  items: [
+    {
+      value: "yes",
+      text: "Yes"
+    },
+    {
+      value: "no",
+      text: "No"
+    }
+  ]
+}) }}
+</div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full  flex-container" style="display: float;">
+        <a href="/cases/exposure" role="button" draggable="false" class="govuk-button">
+        Save
+        </a>
+        <a href="/cases/exposure" class="cancel-link ">
+        Cancel
+        </a>
+    </div>
+</div> 
+
+{% endblock %}
