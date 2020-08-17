@@ -4,21 +4,33 @@
 {% set selected = 'exposure' %}
 {% block sub_content %}
   <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-three-quarters">
       <p class="header-label">Exposure</p>
-      </div>
+    </div>
   </div>
-      <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-three-quarters pricing moj-task-list__items">
+  <div class="govuk-grid-row tfm tfm-width">
+  <div class="govuk-grid-column-three-quarters separator-line moj-task-list__items">
         <h2>Exposure check</h2>
-        <table>
-          <tr>
-            <td colspan="3" class="moj-class-list__item"><a href="/cases/exposure/exposure-check">Are you satisfied with the level of exposure this case will add?</a></td>
-            <td/>
-            <td/>
-            <td style="width:80px"><span class="label--blue">TO DO</span></td>
-          </tr>
-        </table>
+            {% if data['exposure-happy'] %}
+              <table>
+                <tr>
+                  <td class="moj-class-list__item" style="width:200px;font-weight:bold;">Level of exposure is</td>
+                  <td class="moj-class-list__item">{% if data['exposure-happy'] == 'yes' %}<span class="label--green">GOOD</span>{% else %} <span class="label--red">BAD</span> {% endif %}<td/>
+                  <td/>
+                  <td style="width:80px"><a href="/cases/exposure/exposure-check">Change</a></td>
+                </tr>
+              </table>
+              <p>
+                {{ data['exposure-happy-comment']}}
+              </p>
+            {% else %}
+              <table>
+                <tr>
+                  <td colspan="2" class="moj-class-list__item" style="font-size:24px;width:800px;"><a href="/cases/exposure/exposure-check">Are you satisfied with the level of exposure this case will add?</a></td>
+                  <td style="width:80px"><span class="label--blue">TO DO</span></td>
+                </tr>
+              </table>
+            {% endif %}
       </div>
   </div>
 <div class="govuk-grid-row tfm tfm-width exposure-summary ">
