@@ -21,9 +21,9 @@
           <tr>
             <td><a href="#">0020010552</a></td>
             <td>BSS</td>
-            <td>1.5%</td>
+            <td>{{ data['interest-margin-amount'] }}%</td>
             <td>1.25%</td>
-            <td><span class="label--graygreen">GOOD</span></td>
+            <td>{% if data['interest-margin-amount'] >= 1.25 %}<span class="label--green">ACCEPTABLE</span>{% else %}<span class="label--red">NOT ACCEPTABLE</span>{% endif %}</td>
             <td><a href="/cases/pricing/interest-margin">Change</a></td>
           </tr>
         </table>

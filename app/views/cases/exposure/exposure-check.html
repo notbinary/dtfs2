@@ -20,6 +20,7 @@
   </div>
 </div>
 {% endblock %}
+
 {% block content %}
   <form action="/cases/exposure" method="post" class="form">
     <div class="govuk-grid-row tfm tfm-width">
@@ -50,22 +51,21 @@
       </div>
     </div>
 
-<div class="govuk-grid-row tfm tfm-width">
-  <div class="govuk-grid-column-one-half">
-
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--m" for="exposure-happy-comment">
-        Comments
-        </label>
-      </h1>
-    <textarea class="govuk-textarea" value="{{ data['exposure-happy-comment'] }}" type="text" id="exposure-happy-cmt" name="exposure-happy-comment" rows="5" aria-describedby="more-detail-hint" >{{ data['exposure-happy-comment'] }}</textarea>
-  </div>
-</div>
+    <div class="govuk-grid-row tfm tfm-width">
+      <div class="govuk-grid-column-one-half">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="exposure-happy-comment">
+          Comments
+          </label>
+        </h1>
+        <textarea class="govuk-textarea" value="{{ data['exposure-happy-comment'] }}" type="text" id="exposure-happy-cmt" name="exposure-happy-comment" rows="5" aria-describedby="more-detail-hint" >{{ data['exposure-happy-comment'] }}</textarea>
+      </div>
+    </div>
 
     <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-full flex-container">
       <button class="govuk-button" data-module="govuk-button">Save</button>
-        <a href="/cases/exposure" class="cancel-link ">
+        <a href="/cases/exposure" class="cancel-link">
         Cancel
         </a>
       </div>
