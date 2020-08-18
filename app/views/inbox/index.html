@@ -5,22 +5,19 @@
 {% set primary = 'inbox' %}
 <div class="govuk-grid-row tfm tfm-width">
     <div class="govuk-grid-column-full">
-        <p class="header-label">Inbox</p>
+      <p class="header-label">Inbox</p>
+      <nav class="moj-sub-navigation" aria-label="Sub navigation">
+        <ul class="moj-sub-navigation__list" style="display: flex">
+          <li class="moj-sub-navigation__item" style="display: flex">
+            <a class="moj-sub-navigation__link" aria-current="page" href="#1">Manual inclusion applications</a><span class="number-label">3</span>
+          </li>
 
-        {%- from "moj/components/sub-navigation/macro.njk" import mojSubNavigation -%}
-
-        {{ mojSubNavigation({
-        label: 'Sub navigation',
-        items: [{
-        text: 'Manual inclusion applications',
-        href: '#1',
-        active: true
-        }, {
-        text: 'Amendmend requests',
-        href: '#2'
-        }]
-        }) }} 
- <h2>Manual inclusion applications received</h2>
+          <li class="moj-sub-navigation__item" style="display: flex">
+            <a class="moj-sub-navigation__link" href="#2">Amendmend requests</a><span class="number-label">1</span>
+          </li>
+        </ul>
+      </nav> 
+      <h2>Manual inclusion applications received</h2>
     </div>
 </div>
 <div class="govuk-grid-row tfm tfm-width">
