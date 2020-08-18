@@ -24,6 +24,7 @@
 </div>
 {% endblock %}
 {% block content %}
+<form action="/cases/credit-analysis" method="post">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
 
@@ -35,7 +36,8 @@
             label: {
                 text: "Describe the contract between the exporter and the buyer",
                 classes: "govuk-label",
-                isPageHeading: false
+                isPageHeading: false,
+                value: "{{ data['credit-analysis-contract'] }}"
             }
             }) }}
             {{ govukTextarea({
@@ -87,4 +89,5 @@ classes: "govuk-link"
 }]
 }) }} 
         </div></div>
+</form>
 {% endblock %}
