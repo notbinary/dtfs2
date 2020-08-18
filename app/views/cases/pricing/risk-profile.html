@@ -21,13 +21,14 @@
 </div>
 {% endblock %}
 {% block content %}
+<form action="/cases/pricing" method="post">
   <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-two-thirds">
 
         {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "changed-name",
-        name: "changed-name",
+        idPrefix: "risk-profile",
+        name: "risk-profile",
         fieldset: {
             legend: {
             text: "What is the risk profile for the guarantee 0020010552?",
@@ -37,12 +38,14 @@
         },
         items: [
             {
-            value: "flat",
-            text: "Flat"
+            value: "Flat",
+            text: "Flat",
+            checked: checked("risk-profile", "flat")
             },
             {
-            value: "variable",
-            text: "Variable"
+            value: "Variable",
+            text: "Variable",
+            checked: checked("risk-profile", "variable")
             }
         ]
         }) }}
@@ -50,8 +53,9 @@
   </div>
     <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-one-quarter flex-container">
-        <a class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</a>
+        <button class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</button>
         <a href="/cases/pricing" style="margin: 10px;">Cancel</a>
       </div>
     </div>
+  </form>
 {% endblock %}

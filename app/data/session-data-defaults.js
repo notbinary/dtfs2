@@ -19,6 +19,8 @@ Example usage:
 
 module.exports = {
 
-  // Insert values here
+  "loss-given-default": "50%",
+  "interest-margin-amount": "1.5%",
+  "risk-profile": "flat"
 
 }
