@@ -4,28 +4,26 @@
 {% extends "cases/case.html" %}
 {% block sub_content %}
   <div class="govuk-grid-row tfm tfm-width">
-    <div class="govuk-grid-column-three-quarters tfm">  
+    <div class="govuk-grid-column-three-quarters tfm">
       <p class="header-label">Credit analysis</p>
     </div>
-    <div class="govuk-grid-column-one-quarter tfm">  
+    <div class="govuk-grid-column-one-quarter tfm">
 
       {{ govukButton({
         text: "Submit for Approval",
         href: "/cases/credit-analysis/approval"
       }) }}
     </div>
-    
   </div>
   <div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column-one-quarter tfm">
 
-  <div class="govuk-grid-column-one-quarter tfm">
-
-  {{ mojSideNavigation({
+      {{ mojSideNavigation({
     label: 'Side navigation',
     sections: [
       {
         heading: {
-          text: 'Section 1'
+          text: 'About the export'
         },
         items: [{
           text: 'About the export',
@@ -93,83 +91,82 @@
     ]
   }) }}
 
-  </div>
+    </div>
 
-
-    <div class="govuk-grid-column-three-quarters">
-    {%- from "moj/components/task-list/macro.njk" import mojTaskList -%}
-
-{{ mojTaskList({
-sections: [
-      {
-        heading: {
-          text: 'About the export and relationship with the bank'
-        },
-        items: [{
-          text: 'Enter information about the export',
-          href: 'credit-analysis/export',
-          active: true
-        }, {
-          text: 'Enter the exporter`s relationship with the bank',
-          href: 'credit-analysis/bank-relationship'
-        }, {
-          text: 'Enter the exporter`s exsting facilities with banks and other organisations',
-          href: 'credit-analysis/existing-facility'
-        }]
-      },
-      {
-        heading: {
-          text: 'Business risk'
-        },
-        items: [{
-          text: 'Enter company background',
-          href: 'credit-analysis/company-background'
-        }, {
-          text: 'Enter business risk factors',
-          href: 'credit-analysis/business-risk-factors'
-        }]
-      },
-      {
-        heading: {
-          text: 'Financial risk'
-        },
-        items: [{
-          text: 'Add company accounts',
-          href: 'credit-analysis/company-accounts'
-        }, {
-          text: 'Enter financial this credit analysis is based on',
-          href: 'credit-analysis/financial-year'
-        }, {
-          text: 'Enter information about the EBITDA levels',
-          href: 'credit-analysis/ebitda'
-        }, {
-          text: 'Enter information abouth the cash balance',
-          href: 'credit-analysis/cash-balance'
-        }, {
-          text: 'Enter debts',
-          href: 'credit-analysis/debts'
-        }, {
-          text: 'Enter information about the forecast',
-          href: 'credit-analysis/forecast'
-        }, {
-          text: 'Enter information abouth short-term liquidity',
-          href: 'credit-analysis/short-term-liquidity'
-        }]
-      },
-      {
-        heading: {
-          text: 'Conclusions'
-        },
-        items: [{
-          text: 'Enter supporting factors and recommendations',
-          href: 'credit-analysis/supporting-factors'
-        }, {
-          text: 'Enter key risks',
-          href: 'credit-analysis/key-risks'
-        }]
-      }
-    ]
-}) }} 
+    <div class="govuk-grid-column-three-quarters tfm credit-analysis">
+      <h1>About the export and the relationship with the bank</h1>
+      <div class="credit-analysis-topic">
+        <div id="export" class="credit-analysis-item">
+          {% if not data['credit-analysis-contract'] %}
+          <a href="credit-analysis/export">Enter information about the export</a>
+          {% else %}
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters tfm credit-analysis" style="margin-bottom:40px">
+                <h2>About the export</h2>
+                <h3>The contract between the exporter and the buyer</h3>
+                {{ data['credit-analysis-contract'] }}
+                <h3>The payment terms and milestones</h3>
+                {{ data['credit-analysis-payment-terms'] }}
+                <h3>The buyer's ability to pay</h3>
+                {{ data['credit-analysis-ability-to-pay'] }}
+                <h3>The exporter's ability to perform as a business</h3>
+                {{ data['credit-analysis-ability-to-perform'] }}      
+              </div>
+              <div class="govuk-grid-column-one-quarter tfm credit-analysis flex-container">
+                <a href="credit-analysis/export" style="margin-top:20px;">Change</a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div id="bank-relationship" class="credit-analysis-item">
+          <a href="credit-analysis/bank-relationship">Enter the exporter`s relationship with the bank</a>
+        </div>
+        <div id="existing-facilities" class="credit-analysis-item">
+          <a href="credit-analysis/existing-facility">Enter the exporter`s exsting facilities with banks and other organisations</a>
+        </div>
+      </div>
+      <h1>Business risk</h1>
+      <div id="export" class="credit-analysis-header-line">
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/company-background">Enter company background</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/business-risk-factors">credit-analysis/company-background</a>
+        </div>
+      </div>
+      <h1>Financial risk</h1>
+      <div id="export" class="credit-analysis-header-line">
+        <div class="credit-analysis-item">
+          <a href="Add company accounts">Add company accounts</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/financial-year">Enter financial this credit analysis is based on</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/ebitda">Enter information about the EBITDA levels</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/cash-balance">Enter information abouth the cash balance</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/debts">credit-analysis/cash-balance</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/forecast">Enter information about the forecast</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/short-term-liquidity">Enter information about the short-term liquidity</a>
+        </div>
+      </div>
+      <h1>Conclusions</h1>
+      <div id="export" class="credit-analysis-header-line">
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/supporting-factors">Enter supporting factors and recommendations</a>
+        </div>
+        <div class="credit-analysis-item">
+          <a href="credit-analysis/key-risks">Enter key risks</a>
+        </div>
+      </div>
     </div>
   </div>
 
