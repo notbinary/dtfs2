@@ -25,10 +25,17 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <div class="govuk-form-group tfm">
-      <h1>What interest margin is the bank charging?</h1>
-      <span class="moj-label__currency">%</span>
-      <input class="govuk-input moj-input__currency govuk-input--width-5" value="{{ data['interest-margin-amount'] }}" id="interest-margin-amount" name="interest-margin-amount" type="text" autocomplete="off" pattern="[0-9]*" >
-      </input>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-fieldset__heading">
+            What interest margin is the bank charging?
+          </h1>
+        </legend>
+        <div class="flex-container">
+              <input class="govuk-input govuk-input--width-2" value="{{ data['interest-margin-amount'] }}" id="interest-margin-amount" name="interest-margin-amount" type="text" autocomplete="off" pattern="[0-9]*" >
+              </input>
+              <span class="percentage-field">%</span>
+        </div>
+
       </div> 
     </div>
   </div>
