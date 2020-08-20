@@ -55,6 +55,7 @@
     <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-three-quarters separator-line pricing">
         <h2>Credit rating</h2>
+        {% if not data['credit-rating'] %}
         <table>
           <tr>
             <td colspan="3"><a href="/cases/pricing/credit-rating.html" class="govuk-link" style="font-size:19px;">Select a risk rating for this case</a></td>
@@ -63,6 +64,18 @@
             <td style="width:80px"><span class="label--blue">TO DO</span></td>
           </tr>
         </table>
+        {% else %}
+        <table>
+          <tr>
+            <td>Risk rating is</td>
+            <td/>
+            <td/>
+            <td/>
+            <td>{{ data['credit-rating'] }}</td>
+            <td><a href="/cases/pricing/credit-rating">Change</a></td>
+          </tr>
+        </table>
+        {% endif %}
       </div>
   </div>
     <div class="govuk-grid-row tfm tfm-width">
@@ -71,8 +84,7 @@
         <table>
           <tr>
             <th>Facility Id</th>
-            <th>Loss given default</th>
-            <th/>
+            <th colspan="2">Loss given default</th>
             <th/>
             <th/>
             <th/>

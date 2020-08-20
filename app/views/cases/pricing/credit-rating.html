@@ -21,11 +21,12 @@
 </div>
 {% endblock %}
 {% block content %}
+<form action="/cases/pricing" method="post">
   <div class="govuk-grid-row tfm tfm-width">
       <div class="govuk-grid-column-full">
         {{ govukRadios({
-        idPrefix: "changed-name",
-        name: "changed-name",
+        idPrefix: "credit-rating",
+        name: "credit-rating",
         fieldset: {
             legend: {
             text: "Select credit rating for this case",
@@ -35,25 +36,29 @@
         },
         items: [
             {
-            value: "good",
-            text: "Good (BB-)"
+            value: "Good (BB-)",
+            text: "Good (BB-)",
+            checked: checked("credit-rating", "Good (BB-)")
             },
             {
-            value: "acceptable",
-            text: "Acceptable (B+)"
+            value: "Acceptable (B+)",
+            text: "Acceptable (B+)",
+            checked: checked("credit-rating", "Acceptable (B+)")
             },
             {
-            value: "other",
-            text: "Other"
+            value: "Other",
+            text: "Other",
+            checked: checked("credit-rating", "Other")
             }
         ]
         }) }}
       </div>
   </div>
-    <div class="govuk-grid-row tfm tfm-width">
-      <div class="govuk-grid-column-one-quarter flex-container">
-        <a class="govuk-button" data-module="govuk-button" href="/cases/pricing">Save</a>
-        <a href="/cases/pricing" class="cancel-link">Cancel</a>
-      </div>
+  <div class="govuk-grid-row tfm tfm-width">
+    <div class="govuk-grid-column-one-quarter flex-container">
+      <button class="govuk-button" data-module="govuk-button">Save</button>
+      <a href="/cases/pricing" class="cancel-link">Cancel</a>
     </div>
+  </div>
+</form>
 {% endblock %}
