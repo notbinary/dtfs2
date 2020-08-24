@@ -12,10 +12,9 @@ function validateForm(form, field) {
 
   if (x == "" || x > 100 || x < 0) {
     document.getElementById('errorSummary').style.display = 'block';
-    document.getElementById('input-form').classList.add("govuk-form-group--error");
-    //document.forms[form]['errorMessage'].style.display = 'block';
     document.getElementById('errorMessage').style.display = 'block';
     document.getElementById('input-field').classList.add("govuk-input--error");
+    document.getElementById('input-form').classList.add("govuk-form-group--error");
     return false;
   }
 }
