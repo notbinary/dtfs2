@@ -21,7 +21,17 @@
 </div>
 {% endblock %}
 {% block content %}
-<form action="/cases/pricing" method="post" class="form">
+{%- from "govuk/components/input/macro.njk" import govukInput -%}
+{%- from "govuk/components/radios/macro.njk" import govukRadios -%}
+{%- from "govuk/components/date-input/macro.njk" import govukDateInput -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+
+
+
+<form name="interest-margin-form" method="post" action="/cases/pricing" onsubmit="return validateForm('interest-margin-form','interest-margin-amount')" class="form">
+<div tabindex="-1" role="group" id="errorSummary" name="errorSummary" class="govuk-error-summary moj-hidden" aria-labelledby="error-summary-title" data-module="error-summary">
+sdfsdfsfsdf
+</div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <div class="govuk-form-group tfm">
@@ -30,10 +40,10 @@
             What interest margin is the bank charging?
           </h1>
         </legend>
-        <div class="flex-container">
+        <div class="flex-container" id="interest-margin-div">
               <input class="govuk-input govuk-input--width-2" value="{{ data['interest-margin-amount'] }}" id="interest-margin-amount" name="interest-margin-amount" type="number" step="any" autocomplete="off" >
-              </input>
-              <span class="percentage-field">%</span>
+              
+              <span class="percentage-field" id="interest-margin-percentage" name="interest-margin-percentage">%</span></input>
         </div>
 
       </div> 
@@ -46,4 +56,5 @@
     </div>
   </div>
 </form>
+
 {% endblock %}
