@@ -9,16 +9,13 @@
 <script>
 function validateForm(form, field) {
   var x = document.forms[form][field].value;
-  if (x == "") {
-    document.getElementById('errorSummary').style.display = 'block';
-     document.getElementById('errorSummary').innerHTML = "Please enter a value.";
 
-    return false;
-  }
-  if (x > 100 || x < 0) {
+  if (x == "" || x > 100 || x < 0) {
     document.getElementById('errorSummary').style.display = 'block';
-    document.getElementById('errorSummary').innerHTML = "Value must be between 0% and 100%.";
-    document.forms[form][field].style.border = '2px solid red';
+    document.getElementById('input-form').classList.add("govuk-form-group--error");
+    //document.forms[form]['errorMessage'].style.display = 'block';
+    document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('input-field').classList.add("govuk-input--error");
     return false;
   }
 }
