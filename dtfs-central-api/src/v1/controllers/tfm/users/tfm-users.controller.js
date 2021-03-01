@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-const { ObjectID } = require('mongodb');
 const db = require('../../../../drivers/db-client');
 
 const usersCollection = 'tfm-users';
@@ -34,7 +33,7 @@ const findOneUser = async (username, callback) => {
 exports.findOneUser = findOneUser;
 
 exports.findOneUserGET = async (req, res) => {
-  const user = await findOneUser(req.params._id);
+  const user = await findOneUser(req.params.username);
   if (user) {
     return res.status(200).send({
       user,
@@ -44,15 +43,15 @@ exports.findOneUserGET = async (req, res) => {
   return res.status(404).send();
 };
 
-const deleteUser = async (_id) => {
+const deleteUser = async (username) => {
   const collection = await db.getCollection(usersCollection);
-  console.log({ deleteUser: _id });
-  const deleted = await collection.deleteOne({ _id: new ObjectID(_id) });
+
+  const deleted = await collection.deleteOne({ username });
   return deleted;
 };
 exports.deleteUser = deleteUser;
 
 exports.deleteUserDELETE = async (req, res) => {
-  const deleted = await deleteUser(req.params._id);
+  const deleted = await deleteUser(req.params.username);
   return res.status(200).send(deleted);
 };

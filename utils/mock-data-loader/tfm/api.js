@@ -86,7 +86,7 @@ const deleteUser = async (user) => {
       'Content-Type': 'application/json',
       Accepts: 'application/json',
     },
-    url: `${urlRoot}/v1/tfm/users/${user._id}`,
+    url: `${urlRoot}/v1/tfm/users/${user.username}`,
   }).catch((err) => { console.log(`err: ${err}`); });
 
   return response.data;

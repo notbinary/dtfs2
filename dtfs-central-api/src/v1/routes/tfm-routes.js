@@ -71,7 +71,7 @@ tfmRouter.route('/users')
     tfmUsersController.createUserPOST,
   );
 
-tfmRouter.route('/users/:_id')
+tfmRouter.route('/users/:username')
   .get(
     tfmUsersController.findOneUserGET,
   )
