@@ -145,7 +145,7 @@ const getPartyDbInfo = async ({ companyRegNo }) => {
   }
 };
 
-const getUser = async (username) => {
+const findUser = async (username) => {
   try {
     const response = await axios({
       method: 'get',
@@ -169,5 +169,5 @@ module.exports = {
   updateFacility,
   queryDeals,
   getPartyDbInfo,
-  getUser,
+  findUser,
 };

@@ -52,12 +52,12 @@ const login = async (username) => {
   try {
     const response = await axios({
       method: 'get',
-      url: `${urlRoot}/v1/tfm/users/${username}`,
+      url: `${urlRoot}/v1/users/${username}`,
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
+    console.log({ data: response.data });
     return response.data.user;
   } catch (err) {
     console.log('loginError', { err });

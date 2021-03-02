@@ -25,15 +25,15 @@ exports.listUsersGET = async (req, res) => {
   return res.status(200).send({ users });
 };
 
-const findOneUser = async (username, callback) => {
+const findOneUser = async (username) => {
   const collection = await db.getCollection(usersCollection);
-
-  collection.findOne({ username }, callback);
+  return collection.findOne({ username });
 };
 exports.findOneUser = findOneUser;
 
 exports.findOneUserGET = async (req, res) => {
   const user = await findOneUser(req.params.username);
+
   if (user) {
     return res.status(200).send({
       user,
