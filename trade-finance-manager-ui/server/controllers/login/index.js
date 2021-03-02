@@ -6,7 +6,7 @@ const postLogin = async (req, res) => {
   const { user } = await api.login(req.body.email);
 
   if (!user) {
-    res.render('login.njk');
+    return res.render('login.njk');
   }
   req.session.user = user;
 

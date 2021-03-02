@@ -57,10 +57,8 @@ const login = async (username) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log({ data: response.data });
     return response.data.user;
   } catch (err) {
-    console.log('loginError', { err });
     return false;
   }
 };

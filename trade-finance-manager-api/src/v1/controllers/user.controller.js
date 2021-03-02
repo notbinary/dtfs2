@@ -8,10 +8,7 @@ const findUserGET = async (req, res) => {
   const { username } = req.params;
   const user = await findUser(username);
 
-  if (!user) {
-    return res.status(404).send();
-  }
-
-  return res.status(200).send({ user });
+  const status = user ? '200' : '404';
+  return res.status(status).send({ user });
 };
 exports.findUserGET = findUserGET;
