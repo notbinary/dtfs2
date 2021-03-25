@@ -11,6 +11,7 @@ const currencyExchangeRate = require('./controllers/currency-exchange-rate.contr
 const exposurePeriod = require('./controllers/exposure-period.controller');
 const companiesHouse = require('./controllers/companies-house.controller');
 const ordnanceSurvey = require('./controllers/ordnance-survey.controller');
+const premiumSchedule = require('./controllers/premium-schedule.controller');
 
 openRouter.route('/countries')
   .get(
@@ -76,6 +77,12 @@ openRouter.route('/exposure-period/:startDate/:endDate/:facilityType')
   .get(
     exposurePeriod.getExposurePeriod,
   );
+
+openRouter.route('/premium-schedule')
+  .get(
+    premiumSchedule.getPremiumSchedule,
+  );
+
 
 openRouter.route('/companies-house/:companyRegNo')
   .get(

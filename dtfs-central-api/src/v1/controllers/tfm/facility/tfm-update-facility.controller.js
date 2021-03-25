@@ -35,7 +35,7 @@ exports.updateFacilityPut = async (req, res) => {
   const { facilityUpdate } = req.body;
 
   const facility = await findOneFacility(facilityId);
-
+  console.log(`facilityUpdate:${JSON.stringify(facilityUpdate)}`);
   if (facility) {
     const updatedFacility = await updateFacility(
       facilityId,

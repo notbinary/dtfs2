@@ -1,6 +1,7 @@
 const api = require('../api');
 const convertFacilityCurrency = require('./convert-facility-currency');
 const getFacilityExposurePeriod = require('./get-facility-exposure-period');
+const getFacilityPremiumSchedule = require('./get-facility-premium-schedule');
 
 const updateFacilities = async (deal) => {
   const modifiedDeal = deal;
@@ -28,13 +29,19 @@ const updateFacilities = async (deal) => {
 
       const facilityCurrencyConversion = await convertFacilityCurrency(facility, dealSubmissionDate);
       const facilityExposurePeriod = await getFacilityExposurePeriod(facility);
+      const facilityPremiumSchedule = await getFacilityPremiumSchedule(facility);
 
       const facilityUpdate = {
         ...facilityCurrencyConversion,
         ...facilityExposurePeriod,
+        ...facilityPremiumSchedule,
       };
 
       const updatedFacility = await api.updateFacility(facilityId, facilityUpdate);
+      console.log(`facilityPremiumSchedule:${JSON.stringify(facilityPremiumSchedule)}`);
+      console.log(`facilityUpdate:${JSON.stringify(facilityUpdate)}`);
+      console.log(`updatedFacility:${JSON.stringify(updatedFacility)}`);
+
 
       updatedCount += 1;
 

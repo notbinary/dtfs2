@@ -258,6 +258,25 @@ const getFacilityExposurePeriod = async (startDate, endDate, facilityType) => {
   }
 };
 
+const getPremiumSchedule = async (facility) => {
+  try {
+    const response = await axios({
+      method: 'get',
+      url: `${refDataUrl}/premium-schedule`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        facility,
+      },
+    });
+    console.log(`getPremiumSchedule - response.data:${response.data}`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
 const createACBS = async (deal) => {
   console.log(`${refDataUrl}/acbs`);
   try {
@@ -293,5 +312,6 @@ module.exports = {
   findTeamMembers,
   getCurrencyExchangeRate,
   getFacilityExposurePeriod,
+  getPremiumSchedule,
   createACBS,
 };
