@@ -3,7 +3,7 @@ const { updateDeal } = require('../deal.controller');
 const facilitiesController = require('../facilities.controller');
 
 const createUkefIds = async (dealId, deal, user) => {
-  const ukefDealId = await refDataApi.numberGenerator.create('deal');
+  const ukefDealId = 20030255; // await refDataApi.numberGenerator.create('deal');
 
   const totalFacilities = deal.facilities.length;
   let updatedFacilitiesCount = 0;

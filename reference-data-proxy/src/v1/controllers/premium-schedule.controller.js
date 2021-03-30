@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // Premium Schedule API returns the premium schedule for a given facility
 //
 // the flow is:
@@ -5,18 +6,33 @@
 // 2) Premium Schedule Segments gets the segments by facilityURN
 
 const axios = require('axios');
-// const request = require('request');
 
-const postPremiumSchedule = async (facility) => {
+const postPremiumSchedule = async (facility, facilityExposurePeriod) => {
   const data = JSON.stringify([{
-    facilityURN: 50000010, productGroup: 'BS', premiumTypeId: 1, premiumFrequencyId: 1, guaranteeCommencementDate: '2021-01-19', guaranteeExpiryDate: '2022-05-17', guaranteePercentage: 1.85, guaranteeFeePercentage: 80, dayBasis: '360', exposurePeriod: 16, cumulativeAmount: null, maximumLiability: 400000,
+    facilityURN: 50000010,
+    productGroup: 'BS',
+    premiumTypeId: 1,
+    premiumFrequencyId: 1,
+    guaranteeCommencementDate: '2021-01-19',
+    guaranteeExpiryDate: '2022-05-17',
+    guaranteePercentage: 1.85,
+    guaranteeFeePercentage: 80,
+    dayBasis: '360',
+    exposurePeriod: 16,
+    cumulativeAmount: null,
+    maximumLiability: 400000,
   }]);
+  console.log(`facilityExposurePeriod:${facilityExposurePeriod}`);
+
 
   const config = {
     method: 'post',
-    url: 'https://dev-ukef-mdm-ea-v1.uk-e1.cloudhub.io/api/v1/premium/schedule',
+    url: process.env.MULESOFT_API_PREMIUM_SCHEDULE_URL,
+    auth: {
+      username: process.env.MULESOFT_API_PREMIUM_SCHEDULE_KEY,
+      password: process.env.MULESOFT_API_PREMIUM_SCHEDULE_SECRET,
+    },
     headers: {
-      Authorization: 'Basic NjEyYWJkZGM4ZGQ1NDVkZTlhN2RhZGJlNmQ3MGQ1MTQ6YTY5RUMzMDg0YjUyNGI5N0EyMERGMmYyOTg2Qjc0MUM=',
       'Content-Type': 'application/json',
     },
     data,
@@ -29,55 +45,40 @@ const postPremiumSchedule = async (facility) => {
   if (response && response.response && response.response.status) {
     return response.response.status;
   }
-  // response.statusCode
-  //   .then((response) => statusCode = response.statusCode)
-  //   .catch((error) => {
-  //     console.error(`axios-error:${error}`);
-  //   });
-  // if (statusCode > 0) {
-  //   return statusCode;
-  // }
-
 
   // eslint-disable-next-line no-underscore-dangle
-  return new Error(`Error calling Post Premium schedule. facilityURN:${facility.facilityURN}`);
+  return new Error(`Error calling Post Premium schedule. facilityURN:${facility._id}`);
 };
 
-const getScheduleData = async (facility) => {
+const getScheduleData = async (facilityId) => {
   const response = await axios({
     method: 'get',
     url: 'https://dev-ukef-mdm-ea-v1.uk-e1.cloudhub.io/api/v1/premium/segments/50000010',
-    // url: `${process.env.MULESOFT_API_PREMIUM_SEGMENTS_URL}/${50000010}`,
+    // `${process.env.MULESOFT_API_PREMIUM_SEGMENTS_URL}/${facilityId}`,
     auth: {
       username: process.env.MULESOFT_API_PREMIUM_SCHEDULE_KEY,
       password: process.env.MULESOFT_API_PREMIUM_SCHEDULE_SECRET,
     },
   }).catch((catchErr) => catchErr);
-
-  if (response.data) {
-    return response.data;
+  if (response) {
+    return response;
   }
 
-  if (response && response.response && response.response.data) {
-    return response.response.data;
-  }
-  console.log(`schedule response:${response}`);
   // eslint-disable-next-line no-underscore-dangle
-  return new Error(`Error getting Premium schedule segments. Facility:${facility.facilityURN}`);
+  return new Error(`Error getting Premium schedule segments. Facility:${facilityId}`);
 };
 
-const getPremiumSchedule = async (facility) => {
-  console.log('reference-data-proxy premiumScheduleController getPremiumSchedule - startx');
-  const postPremiumScheduleResponse = await postPremiumSchedule(facility);
-  console.log(`getPremiumSchedule - postPremiumScheduleResponse:${postPremiumScheduleResponse}`);
+const getPremiumSchedule = async (req, res) => {
+  const { facility, facilityExposurePeriod } = req.body;
+  const postPremiumScheduleResponse = await postPremiumSchedule(facility, facilityExposurePeriod);
   if (postPremiumScheduleResponse === 200 || postPremiumScheduleResponse === 201) {
-    console.log('getPremiumSchedule - getPremiumSchedule if block');
-    const schedule = await getScheduleData(50000010);
-    console.log(`getPremiumSchedule - schedule:${JSON.stringify(schedule)}`);
-    return schedule;
+    // const { status, data } = await getScheduleData(facility.ukefFacilityId);
+    const response = await getScheduleData(50000010);
+    if (response.status === 200 || response.status === 201) {
+      return res.status(response.status).send(response.data);
+    }
+    console.error(`getPremiumSchedule. Status: ${response.status}. response:${response}`);
   }
-  console.error(`Error calling Premium schedule. Facility:${facility.facilityURN}`);
-  // eslint-disable-next-line no-underscore-dangle
-  return new Error(`Error calling Premium schedule. Facility:${facility._id}`);
+  return new Error(`Error calling Premium schedule. Facility:${facility.ukefFacilityId}`);
 };
 exports.getPremiumSchedule = getPremiumSchedule;

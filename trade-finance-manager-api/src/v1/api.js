@@ -258,7 +258,7 @@ const getFacilityExposurePeriod = async (startDate, endDate, facilityType) => {
   }
 };
 
-const getPremiumSchedule = async (facility) => {
+const getPremiumSchedule = async (facility, facilityExposurePeriod) => {
   try {
     const response = await axios({
       method: 'get',
@@ -268,12 +268,13 @@ const getPremiumSchedule = async (facility) => {
       },
       data: {
         facility,
+        facilityExposurePeriod,
       },
     });
     console.log(`getPremiumSchedule - response.data:${response.data}`);
     return response.data;
-  } catch (err) {
-    return err;
+  } catch ({ response }) {
+    return false;
   }
 };
 

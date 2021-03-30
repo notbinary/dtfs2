@@ -32,7 +32,7 @@ const submitDeal = async (dealId) => {
       CONSTANTS.DEALS.DEAL_STATUS.SUBMISSION_ACKNOWLEDGED,
     );
   }
-
+  console.log(`updatedDealWithUpdatedFacilities:${JSON.stringify(updatedDealWithUpdatedFacilities)}`);
   return api.updateDeal(dealId, updatedDealWithUpdatedFacilities);
 };
 

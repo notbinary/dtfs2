@@ -1,11 +1,12 @@
 const api = require('../api');
 
-const getFacilityPremiumSchedule = async (facility) => {
-  console.log(`getFacilityPremiumSchedule -facility:${facility}`);
+const getFacilityPremiumSchedule = async (facility, facilityExposurePeriod) => {
+  console.log(`getFacilityPremiumSchedule -facility:${JSON.stringify(facility)}`);
   const premiumSchedule = await api.getPremiumSchedule(
     facility,
+    facilityExposurePeriod,
   );
-  console.log(`getFacilityPremiumSchedule -premiumSchedule:${facility}`);
+  console.log(`getFacilityPremiumSchedule -premiumSchedule:${JSON.stringify(premiumSchedule)}`);
   return premiumSchedule;
 };
 

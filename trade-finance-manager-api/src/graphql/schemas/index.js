@@ -214,6 +214,22 @@ type TFMDealData {
   supplyContractValueInGBP: String
 }
 
+type PremiumScheduleData {
+  id: Int
+  facilityURN: String
+  calculationDate: String
+  income: Float 
+  incomePerDay: Float
+  exposure: Int
+  period: Int
+  daysInPeriod: Int
+  effectiveFrom: String
+  effectiveTo: String
+  created: String
+  updated: String
+  isActive: String
+}
+
 type TFMFacilityData {
   bondIssuerPartyUrn: String
   bondBeneficiaryPartyUrn: String
@@ -221,6 +237,7 @@ type TFMFacilityData {
   exposurePeriodInMonths: Int
   ukefExposure: FacilityUkefExposure
   creditRating: String
+  premiumSchedule: [PremiumScheduleData]
 }
 
 input DashboardFilters {
