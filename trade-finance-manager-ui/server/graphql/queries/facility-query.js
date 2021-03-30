@@ -47,6 +47,21 @@ const facilityQuery = gql`
           exposure,
           timestamp
         },
+        premiumSchedule{
+          id
+          facilityURN
+          calculationDate
+          income
+          incomePerDay
+          exposure
+          period
+          daysInPeriod
+          effectiveFrom
+          effectiveTo
+          created
+          updated
+          isAtive
+        },
         creditRating
       }
     }

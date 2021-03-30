@@ -227,7 +227,7 @@ type PremiumScheduleData {
   effectiveTo: String
   created: String
   updated: String
-  isActive: String
+  isAtive: String
 }
 
 type TFMFacilityData {
