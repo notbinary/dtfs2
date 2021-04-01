@@ -8,8 +8,11 @@ const { addDealStageAndHistory } = require('./deal.add-deal-stage-and-history');
 const { updatedIssuedFacilities } = require('./update-issued-facilities');
 const CONSTANTS = require('../../constants');
 const api = require('../api');
+<<<<<<< HEAD
 const { createEstoreFolders } = require('./estore.controller');
+=======
 const acbsController = require('./acbs.controller');
+>>>>>>> c0d50d0a5... dtfs2-3410 Added call to ACBS update facility stage
 
 const submitDeal = async (dealId) => {
   const deal = await findOnePortalDeal(dealId);
@@ -22,9 +25,7 @@ const submitDeal = async (dealId) => {
 
   const firstDealSubmission = submissionCount === 1;
   const dealHasBeenResubmit = submissionCount > 1;
-  console.log({
-    submissionCount,
-  });
+
   const submittedDeal = await api.submitDeal(dealId);
 
   if (firstDealSubmission) {
@@ -62,9 +63,17 @@ const submitDeal = async (dealId) => {
       CONSTANTS.DEALS.DEAL_STATUS_PORTAL.SUBMISSION_ACKNOWLEDGED,
     );
 
-    await acbsController.issueAcbsFacilities(dealWithUpdatedFacilities);
-
+<<<<<<< HEAD
     return api.updateDeal(dealId, dealWithUpdatedFacilities);
+=======
+    const updatedDealWithTasks = await createDealTasks(updatedDealWithUpdatedFacilities);
+
+    const updatedDeal = await api.updateDeal(dealId, updatedDealWithTasks);
+
+    await acbsController.issueAcbsFacilities(updatedDeal);
+
+    return updatedDeal;
+>>>>>>> c0d50d0a5... dtfs2-3410 Added call to ACBS update facility stage
   }
 
   return api.updateDeal(dealId, submittedDeal);

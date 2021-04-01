@@ -319,6 +319,26 @@ const createACBS = async (deal, bank) => {
   }
 };
 
+const updateACBSfacility = async (facility, supplierName) => {
+  try {
+    const response = await axios({
+      method: 'post',
+      // eslint-disable-next-line no-underscore-dangle
+      url: `${refDataUrl}/acbs/facility/${facility._id}/issue`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        facility,
+        supplierName,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
 const getFunctionsAPI = async (url = '') => {
   // Need to refer to docker internal to work on localhost
   const modifiedUrl = url.replace(/http:\/\/localhost:[\d]*/, azureAcbsFunctionUrl);
@@ -376,6 +396,7 @@ module.exports = {
   getFacilityExposurePeriod,
   getPremiumSchedule,
   createACBS,
+  updateACBSfacility,
   getFunctionsAPI,
   createEstoreFolders,
 };

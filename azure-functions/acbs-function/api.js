@@ -2,10 +2,28 @@ const axios = require('axios');
 
 require('dotenv').config();
 
-const postToACBS = async (type, acbsInput) => {
+const getACBS = async (apiRef) => {
+  const response = await axios({
+    method: 'get',
+    url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}`,
+    auth: {
+      username: process.env.MULESOFT_API_KEY,
+      password: process.env.MULESOFT_API_SECRET,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch((err) => ({
+    status: err.response.status,
+  }));
+
+  return response;
+};
+
+const postToACBS = async (apiRef, acbsInput) => {
   const response = await axios({
     method: 'post',
-    url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${type}`,
+    url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}`,
     auth: {
       username: process.env.MULESOFT_API_KEY,
       password: process.env.MULESOFT_API_SECRET,
@@ -44,6 +62,10 @@ const createFacilityGuarantee = (acbsInput) => postToACBS('facility/guarantee', 
 
 const createCodeValueTransaction = ((acbsInput) => postToACBS('facility/codeValueTransaction', acbsInput));
 
+const updateFacility = (facilityId, updateType, acbsInput) => postToACBS(`facility/${facilityId}?op=${updateType}`, acbsInput);
+
+const getFacility = (facilityId) => getACBS(`facility/${facilityId}`);
+
 module.exports = {
   createParty,
   createDeal,
@@ -55,4 +77,6 @@ module.exports = {
   createFacilityCovenant,
   createFacilityGuarantee,
   createCodeValueTransaction,
+  updateFacility,
+  getFacility,
 };

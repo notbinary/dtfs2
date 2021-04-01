@@ -3,14 +3,19 @@ const $ = require('mongo-dot-notation');
 const api = require('../api');
 const db = require('../../drivers/db-client');
 const { findOneBank } = require('./banks.controller');
+const tfmController = require('./tfm.controller');
+const isIssued = require('../helpers/is-issued');
 
-const addToACBSLog = async ({ deal, bank, acbsTaskLinks }) => {
+const addToACBSLog = async ({
+  deal = {}, facility = {}, bank = {}, acbsTaskLinks,
+}) => {
   const collection = await db.getCollection('acbs-log');
 
   const acbsLog = await collection.insertOne({
     // eslint-disable-next-line no-underscore-dangle
     dealId: deal._id,
     deal,
+    facility,
     bank,
     status: 'Running',
     instanceId: acbsTaskLinks.id,
@@ -39,6 +44,7 @@ const createACBS = async (deal) => {
 
 const checkAzureAcbsFunction = async () => {
   // Fetch outstanding functions
+
   const collection = await db.getCollection('acbs-log');
   const runningTasks = await collection.find({ status: 'Running' }).toArray();
 
@@ -58,11 +64,52 @@ const checkAzureAcbsFunction = async () => {
         }),
       );
     }
+
+    if (task.runtimeStatus === 'Completed') {
+      const { facilities, ...dealAcbs } = task.output;
+
+      await tfmController.updateAcbs(task.output.portalDealId, dealAcbs);
+      const facilitiesUpdates = facilities.map((facility) => {
+        const { facilityId, ...acbsFacility } = facility;
+        return tfmController.updateFacilityAcbs(facilityId, acbsFacility);
+      });
+      await Promise.all(facilitiesUpdates);
+    }
   });
 };
 
+const issueAcbsFacilities = async (deal) => {
+  if (!deal.tfm.acbs) {
+    // Hasn't been submitted to acbs yet so no need to do anything
+    console.log('DEAL NOT YET SUBMITTED TO ACBS');
+    return;
+  }
+
+  const tfmFacilities = await Promise.all(
+    // eslint-disable-next-line no-underscore-dangle
+    deal.facilities.map((facility) => api.findOneFacility(facility._id)),
+  );
+
+  console.log({ tfmFacilities: JSON.stringify(tfmFacilities, null, 4) });
+
+  const acbsIssuedFacilities = await Promise.all(
+    tfmFacilities.filter((facility) => {
+      // Only concerned with issued facilities on Portal that aren't issued on ACBS
+      const facilityStageInAcbs = facility.tfm.acbs && facility.tfm.acbs.facilityStage;
+      return !isIssued({ facilityStage: facilityStageInAcbs }) && isIssued(facility);
+    }).map((facility) => api.updateACBSfacility(facility, deal.dealSnapshot.submissionDetails['supplier-name'])),
+  );
+
+  await Promise.all(
+    acbsIssuedFacilities.map((acbsTaskLinks) => {
+      console.log({ acbsTaskLinks });
+      return true;
+    }),
+  );
+};
 
 module.exports = {
   createACBS,
   checkAzureAcbsFunction,
+  issueAcbsFacilities,
 };
