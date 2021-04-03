@@ -49,7 +49,6 @@ const facilityQuery = gql`
         },
         premiumSchedule{
           id
-          facilityURN
           calculationDate
           income
           incomePerDay
