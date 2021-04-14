@@ -62,7 +62,9 @@ const submitDeal = async (dealId) => {
       CONSTANTS.DEALS.DEAL_STATUS_PORTAL.SUBMISSION_ACKNOWLEDGED,
     );
 
-    await acbsController.issueAcbsFacilities(dealWithUpdatedFacilities);
+    if (deal.details.submissionType === CONSTANTS.DEALS.SUBMISSION_TYPE.AIN) {
+      await acbsController.issueAcbsFacilities(dealWithUpdatedFacilities);
+    }
 
     return api.updateDeal(dealId, dealWithUpdatedFacilities);
   }

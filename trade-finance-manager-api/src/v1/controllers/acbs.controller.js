@@ -84,10 +84,9 @@ const issueAcbsFacilities = async (deal) => {
     console.log('DEAL NOT YET SUBMITTED TO ACBS');
     return;
   }
-
   const tfmFacilities = await Promise.all(
     // eslint-disable-next-line no-underscore-dangle
-    deal.facilities.map((facility) => api.findOneFacility(facility._id)),
+    deal.dealSnapshot.facilities.map((facility) => api.findOneFacility(facility._id)),
   );
 
   console.log({ tfmFacilities: JSON.stringify(tfmFacilities, null, 4) });
