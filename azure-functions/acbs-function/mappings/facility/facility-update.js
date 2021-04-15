@@ -37,15 +37,19 @@
   "obligorIndustryClassification":  ACBS Supplier industry classification - must be 4 characters e.g. 0104
   */
 
-const { formatTimestamp } = require('../../helpers/date');
+const helpers = require('./helpers');
+
 const CONSTANTS = require('../../constants');
 
 const facilityUpdate = (facility, acbsFacility, obligorName) => {
   const { facilitySnapshot } = facility;
 
+  const capitalConversionFactorCode = facilitySnapshot.facilityType === 'GEF' ? helpers.getCapitalConversionFactorCode() : '8';
+
   return {
     ...acbsFacility,
-    issueDate: formatTimestamp(facility.issueDate),
+    capitalConversionFactorCode,
+    issueDate: helpers.getIssueDate(facility, acbsFacility.effectiveDate),
     facilityStageCode: CONSTANTS.FACILITY.STAGE_CODE.ISSUED,
     foreCastPercentage: CONSTANTS.FACILITY.FORECAST_PERCENTAGE.ISSUED,
     productTypeName: facilitySnapshot.facilityType,

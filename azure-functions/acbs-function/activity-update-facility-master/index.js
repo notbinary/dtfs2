@@ -44,7 +44,9 @@ const mandatoryFields = [
 ];
 
 const updateFacilityMaster = async (context) => {
-  const { acbsFacilityMasterInput, updateType, facilityId } = context.bindingData;
+  const {
+    acbsFacilityMasterInput, updateType, facilityId, etag,
+  } = context.bindingData;
 
   const missingMandatory = findMissingMandatory(acbsFacilityMasterInput, mandatoryFields);
 
@@ -54,7 +56,7 @@ const updateFacilityMaster = async (context) => {
 
   const submittedToACBS = moment().format();
 
-  const { status, data } = await api.updateFacility(facilityId, updateType, acbsFacilityMasterInput);
+  const { status, data } = await api.updateFacility(facilityId, updateType, acbsFacilityMasterInput, etag);
 
   if (isHttpErrorStatus(status)) {
     throw new Error(`

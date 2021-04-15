@@ -8,6 +8,7 @@
  *  * - run 'npm install durable-functions' from the wwwroot folder of your
  *   function app in Kudu
  */
+const acbsFacility = require('../acbs-facility');
 const api = require('../api');
 const { isHttpErrorStatus } = require('../helpers/http');
 
@@ -15,7 +16,7 @@ const { isHttpErrorStatus } = require('../helpers/http');
 const getFacilityMaster = async (context) => {
   const { facilityId } = context.bindingData;
 
-  const { status, data } = await api.getFacility(facilityId);
+  const { status, data, headers: { etag } } = await api.getFacility(facilityId);
 
   if (isHttpErrorStatus(status)) {
     throw new Error(`
@@ -25,7 +26,10 @@ const getFacilityMaster = async (context) => {
      `);
   }
 
-  return data;
+  return {
+    acbsFacility: data,
+    etag,
+  };
 };
 
 module.exports = getFacilityMaster;

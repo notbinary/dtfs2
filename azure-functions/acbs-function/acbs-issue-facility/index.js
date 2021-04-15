@@ -24,22 +24,22 @@ module.exports = df.orchestrator(function* updateACBSfacility(context) {
   } = context.df.getInput();
 
   // Facility Master
-  const acbsFacility = yield context.df.callActivity(
+  const { acbsFacility, etag } = yield context.df.callActivity(
     'activity-get-facility-master',
     { facilityId },
     retryOptions,
   );
-  context.log({ acbsFacility });
 
   const acbsFacilityMasterInput = mappings.facility.facilityUpdate(facility, acbsFacility, supplierName);
 
-  context.log({ acbsFacilityMasterInput });
   const updatedFacilityMaster = yield context.df.callActivity(
     'activity-update-facility-master',
-    { facilityId, acbsFacilityMasterInput, updateType: 'issue' },
+    {
+      facilityId, acbsFacilityMasterInput, updateType: 'issue', etag,
+    },
     retryOptions,
   );
-  context.log({ updatedFacilityMaster });
+
   return {
     // eslint-disable-next-line no-underscore-dangle
     facilityId,

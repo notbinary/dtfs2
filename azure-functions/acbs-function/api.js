@@ -3,6 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 const getACBS = async (apiRef) => {
+  console.log('getAcbs', { url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}` });
   const response = await axios({
     method: 'get',
     url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}`,
@@ -15,6 +16,39 @@ const getACBS = async (apiRef) => {
     },
   }).catch((err) => ({
     status: err.response.status,
+  }));
+
+  return response;
+};
+
+const putToACBS = async (apiRef, acbsInput, etag) => {
+  const additionalHeader = etag ? {
+    'If-Match': etag,
+  } : null;
+  console.log({
+    url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}`,
+    headers: {
+      'Content-Type': 'application/json',
+      ...additionalHeader,
+    },
+  });
+  const response = await axios({
+    method: 'put',
+    url: `${process.env.MULESOFT_API_UKEF_TF_EA_URL}/${apiRef}`,
+    auth: {
+      username: process.env.MULESOFT_API_KEY,
+      password: process.env.MULESOFT_API_SECRET,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      ...additionalHeader,
+    },
+    data: acbsInput,
+  }).catch((err) => ({
+    status: err.response.status,
+    data: {
+      error: err.response.data,
+    },
   }));
 
   return response;
@@ -35,7 +69,7 @@ const postToACBS = async (apiRef, acbsInput) => {
   }).catch((err) => ({
     status: err.response.status,
     data: {
-      error: err.response.data.error.errorDescription,
+      error: err.response.data,
     },
   }));
 
@@ -62,7 +96,11 @@ const createFacilityGuarantee = (acbsInput) => postToACBS('facility/guarantee', 
 
 const createCodeValueTransaction = ((acbsInput) => postToACBS('facility/codeValueTransaction', acbsInput));
 
-const updateFacility = (facilityId, updateType, acbsInput) => postToACBS(`facility/${facilityId}?op=${updateType}`, acbsInput);
+const updateFacility = (facilityId, updateType, acbsInput, etag) => putToACBS(
+  `facility/${facilityId}?op=${updateType}`,
+  acbsInput,
+  etag,
+);
 
 const getFacility = (facilityId) => getACBS(`facility/${facilityId}`);
 

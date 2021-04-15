@@ -22,9 +22,7 @@ const submitDeal = async (dealId) => {
 
   const firstDealSubmission = submissionCount === 1;
   const dealHasBeenResubmit = submissionCount > 1;
-  console.log({
-    submissionCount,
-  });
+
   const submittedDeal = await api.submitDeal(dealId);
 
   if (firstDealSubmission) {
