@@ -4,26 +4,49 @@ resource_group=Digital-Dev
 environments=(dev demo)
 app_service_plan=dev
 
+az configure --defaults group=$resource_group
+
 function delete-private-endpoint {
   echo Deleting private endpoint $1
-  az network private-endpoint delete --name $1 -g $resource_group  
+  az network private-endpoint delete --name $1  
   echo Deleted private endpoint $1
+}
+
+function delete-webapp {
+  echo Deleting webapp-vnet $1
+  az webapp vnet-integration remove --name $1
+  az webapp delete --name $1
+  echo Deleted webapp-vnet $1
 }
 
 function delete-application-gateway {
   echo Deleting Application Gateway $1
-  az network application-gateway delete --name $1 -g $resource_group
+  az network application-gateway delete --name $1
   echo Deleted Application Gateway $1
 }
 
 function delete-subnet {
   echo Deleting subnet $1
-  az network vnet subnet delete --name $1 -g $resource_group --vnet-name tfs-${app_service_plan}-vnet
+  az network vnet subnet delete --name $1 --vnet-name tfs-${app_service_plan}-vnet
   echo Deleted subnet $1
 }
 
 for environment in "${environments[@]}"
 do
+  # Delete webapp vnet integration
+  delete-webapp tfs-${environment}-reference-data-proxy
+  delete-webapp tfs-${environment}-dtfs-central-api
+  delete-webapp tfs-${environment}-portal-api
+  delete-webapp tfs-${environment}-trade-finance-manager-api
+  delete-webapp tfs-${environment}-portal-ui
+  delete-webapp tfs-${environment}-trade-finance-manager-ui
+  delete-webapp tfs-${environment}-gef-ui
+  
+  Delete db
+  echo Deleting MongoDB tfs-${environment}-mongo
+  az cosmosdb delete --name tfs-${environment}-mongo
+  echo Deleted MongoDB tfs-${environment}-mongo
+
   # Delete private endpoint subnet
   delete-private-endpoint tfs-${environment}-mongo
   delete-private-endpoint tfs${environment}storage
@@ -41,10 +64,6 @@ do
   delete-subnet ${environment}-private-endpoints
   delete-subnet ${environment}-gateway
 done
-
-echo "Removing NICs"
-nics=($(az network nic list -g $resource_group --query [].id -o tsv))
-az network nic delete --ids $nics
 
 delete-subnet ${resource_group}-vm
 delete-subnet ${app_service_plan}-app-service-plan-egress
