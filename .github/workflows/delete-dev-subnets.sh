@@ -27,6 +27,9 @@ function delete-application-gateway {
 
 function delete-subnet {
   echo Deleting subnet $1
+  az network vnet subnet update --name $1 --vnet-name tfs-${app_service_plan}-vnet  --remove natGateway
+  az network vnet subnet update --name $1 --vnet-name tfs-${app_service_plan}-vnet  --remove delegations
+  az network vnet subnet update --name $1 --vnet-name tfs-${app_service_plan}-vnet  --remove serviceAssociationLinks
   az network vnet subnet delete --name $1 --vnet-name tfs-${app_service_plan}-vnet
   echo Deleted subnet $1
 }
@@ -42,9 +45,9 @@ do
   delete-webapp tfs-${environment}-trade-finance-manager-ui
   delete-webapp tfs-${environment}-gef-ui
   
-  Delete db
+  # Delete db
   echo Deleting MongoDB tfs-${environment}-mongo
-  az cosmosdb delete --name tfs-${environment}-mongo
+  az cosmosdb delete --name tfs-${environment}-mongo --yes
   echo Deleted MongoDB tfs-${environment}-mongo
 
   # Delete private endpoint subnet
