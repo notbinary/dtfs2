@@ -8,6 +8,7 @@ const {
   getTask,
   canUpdateTask,
 } = require('../helpers/tasks');
+const sendTfmEmail = require('./send-tfm-email');
 
 const updateHistory = ({
   statusFrom,
@@ -61,13 +62,45 @@ const updateTask = (allTaskGroups, groupId, taskIdToUpdate, taskUpdate) =>
     return group;
   });
 
-const updateTasksCanEdit = (allTaskGroups, groupId, taskIdToUpdate) =>
+const sendUpdatedTaskEmail = async (task, deal) => {
+  let emailVariables = {};
+  let templateId;
+  let sendToEmailAddress;
+  let team;
+
+  switch (task.title) {
+    case CONSTANTS.TASKS.AIN_AND_MIA.GROUP_1.CREATE_OR_LINK_SALESFORCE:
+      emailVariables = {
+        exporterName: deal.dealSnapshot.submissionDetails['supplier-name'],
+        ukefDealId: deal.dealSnapshot.details.ukefDealId,
+      };
+
+      templateId = CONSTANTS.EMAIL_TEMPLATE_IDS.TASK_SALEFORCE_NEW_DEAL;
+      team = await api.findOneTeam(task.team && task.team.id);
+      sendToEmailAddress = team.email;
+
+      break;
+    default:
+  }
+
+  if (templateId) {
+    const emailResponse = await sendTfmEmail(
+      CONSTANTS.EMAIL_TEMPLATE_IDS.TASK_SALEFORCE_NEW_DEAL,
+      sendToEmailAddress,
+      emailVariables,
+      deal,
+    );
+    return emailResponse;
+  }
+};
+
+const updateTasksCanEdit = async (allTaskGroups, groupId, taskIdToUpdate, deal) =>
   allTaskGroups.map((tGroup) => {
     let group = tGroup;
 
     group = {
       ...group,
-      groupTasks: group.groupTasks.map((t) => {
+      groupTasks: group.groupTasks.map(async (t) => {
         const task = t;
 
         if (task.status === CONSTANTS.TASKS.STATUS.COMPLETED) {
@@ -80,9 +113,11 @@ const updateTasksCanEdit = (allTaskGroups, groupId, taskIdToUpdate) =>
             if (task.status === CONSTANTS.TASKS.STATUS.COMPLETED) {
               task.canEdit = false;
             }
+          } else {
+            // Send task notification emails
+            await sendUpdatedTaskEmail(task, deal);
           }
         }
-
         return task;
       }),
     };
@@ -180,7 +215,7 @@ const updateTfmTask = async (dealId, tfmTaskUpdate) => {
 
     const modifiedTasks = updateTask(allTasks, groupId, taskIdToUpdate, updatedTask);
 
-    const modifiedTasksWithEditStatus = updateTasksCanEdit(modifiedTasks, groupId, taskIdToUpdate);
+    const modifiedTasksWithEditStatus = await updateTasksCanEdit(modifiedTasks, groupId, taskIdToUpdate, deal);
 
     const tfmHistoryUpdate = {
       tasks: [
