@@ -98,7 +98,7 @@ describe('tasks controller  / tasks helper functions', () => {
 
   describe('updateTasksCanEdit', () => {
     describe('when given a task with `Done` status', () => {
-      it('should mark the task as canEdit = false', () => {
+      it('should mark the task as canEdit = false', async () => {
         const mockGroup1Tasks = [
           {
             id: '1',
@@ -128,7 +128,7 @@ describe('tasks controller  / tasks helper functions', () => {
           },
         ];
 
-        const result = updateTasksCanEdit(mockTasks, 1, '1');
+        const result = await updateTasksCanEdit(mockTasks, 1, '1');
 
         const expected = [
           {
@@ -150,7 +150,7 @@ describe('tasks controller  / tasks helper functions', () => {
     });
 
     describe('when given a task that is not task #1, and previous task has `Done` status', () => {
-      it('should mark the task as canEdit = false', () => {
+      it('should mark the task as canEdit = false', async () => {
         const mockGroup1Tasks = [
           {
             id: '1',
@@ -180,7 +180,7 @@ describe('tasks controller  / tasks helper functions', () => {
           },
         ];
 
-        const result = updateTasksCanEdit(mockTasks, 1, '2');
+        const result = await updateTasksCanEdit(mockTasks, 1, '2');
 
         const expected = [
           {
