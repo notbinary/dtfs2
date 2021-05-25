@@ -84,23 +84,24 @@ const sendUpdatedTaskEmail = async (task, deal) => {
   }
 
   if (templateId) {
-    const emailResponse = await sendTfmEmail(
+    await sendTfmEmail(
       CONSTANTS.EMAIL_TEMPLATE_IDS.TASK_SALEFORCE_NEW_DEAL,
       sendToEmailAddress,
       emailVariables,
       deal,
     );
-    return emailResponse;
   }
 };
 
-const updateTasksCanEdit = async (allTaskGroups, groupId, taskIdToUpdate, deal) =>
-  allTaskGroups.map((tGroup) => {
+const updateTasksCanEdit = async (allTaskGroups, groupId, taskIdToUpdate, deal) => {
+  const sendUpdatedEmailRequests = [];
+
+  const taskGroups = allTaskGroups.map((tGroup) => {
     let group = tGroup;
 
     group = {
       ...group,
-      groupTasks: group.groupTasks.map(async (t) => {
+      groupTasks: group.groupTasks.map((t) => {
         const task = t;
 
         if (task.status === CONSTANTS.TASKS.STATUS.COMPLETED) {
@@ -115,7 +116,7 @@ const updateTasksCanEdit = async (allTaskGroups, groupId, taskIdToUpdate, deal) 
             }
           } else {
             // Send task notification emails
-            await sendUpdatedTaskEmail(task, deal);
+            sendUpdatedEmailRequests.push(sendUpdatedTaskEmail(task, deal));
           }
         }
         return task;
@@ -124,6 +125,10 @@ const updateTasksCanEdit = async (allTaskGroups, groupId, taskIdToUpdate, deal) 
 
     return group;
   });
+
+  await Promise.all(sendUpdatedEmailRequests);
+  return taskGroups;
+};
 
 const updateUserTasks = async (allTasks, userId) => {
   const tasksAssignedToUser = [];
