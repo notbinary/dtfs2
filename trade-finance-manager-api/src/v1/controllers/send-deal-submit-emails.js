@@ -3,12 +3,32 @@ const api = require('../api');
 const CONSTANTS = require('../../constants');
 const formattedTimestamp = require('../formattedTimestamp');
 const { getFirstTask } = require('../helpers/tasks');
+const { capitalizeFirstLetter } = require('../../utils/string');
 const sendTfmEmail = require('./send-tfm-email');
 
 // make sure the first task is `Match or Create Parties`
 // if the first task changes in the future, we might not want to send an email.
 const shouldSendFirstTaskEmail = (firstTask) =>
   (firstTask.title === CONSTANTS.TASKS.AIN_AND_MIA.GROUP_1.MATCH_OR_CREATE_PARTIES);
+
+const generateFacilitiesListString = (facilities) => {
+  let result;
+
+  facilities.forEach((facility, index) => {
+    const { facilityType, ukefFacilityID, bankReferenceNumber } = facility;
+
+    const fType = capitalizeFirstLetter(facilityType);
+    const listItem = `- ${fType} facility with your reference ${bankReferenceNumber} has been given the UKEF reference: ${ukefFacilityID}`;
+
+    if (index === 0) {
+      result = listItem;
+    } else {
+      result += `\n ${listItem}`;
+    }
+  });
+
+  return result;
+};
 
 const sendFirstTaskEmail = async (deal) => {
   const { tfm, dealSnapshot } = deal;
@@ -54,6 +74,49 @@ const sendFirstTaskEmail = async (deal) => {
   return null;
 };
 
+const sendMiaAcknowledgement = async (deal) => {
+  const { dealSnapshot } = deal;
+
+  const {
+    bankSupplyContractID: bankReferenceNumber,
+    ukefDealId: ukefDealID,
+    maker,
+    submissionType,
+  } = dealSnapshot.details;
+
+  if (submissionType !== CONSTANTS.DEALS.SUBMISSION_TYPE.MIA) {
+    return null;
+  }
+
+  const {
+    'supplier-name': exporterName,
+  } = dealSnapshot.submissionDetails;
+
+  const {
+    firstname: recipientName,
+    email: sendToEmailAddress,
+  } = maker;
+
+  const templateId = CONSTANTS.EMAIL_TEMPLATE_IDS.DEAL_MIA_RECEIVED;
+
+  const emailVariables = {
+    recipientName,
+    exporterName,
+    bankReferenceNumber,
+    ukefDealID,
+    facilitiesList: generateFacilitiesListString(deal),
+  };
+
+  console.log({ emailVariables });
+  const emailResponse = await sendTfmEmail(
+    templateId,
+    'andrew@foundry4.com', // sendToEmailAddress,
+    emailVariables,
+    deal,
+  );
+  return emailResponse;
+};
+
 const sendDealSubmitEmails = async (deal) => {
   if (!deal) {
     return false;
@@ -62,7 +125,13 @@ const sendDealSubmitEmails = async (deal) => {
   // send email for the first task
   const firstTaskEmail = await sendFirstTaskEmail(deal);
 
-  return firstTaskEmail;
+  // TODO in future ticket DTFS2-3221 - send email for MIA acknowledgment
+  const emailAcknowledgementMIA = await sendMiaAcknowledgement(deal);
+
+  return {
+    firstTaskEmail,
+    emailAcknowledgementMIA,
+  };
 };
 
 module.exports = {
