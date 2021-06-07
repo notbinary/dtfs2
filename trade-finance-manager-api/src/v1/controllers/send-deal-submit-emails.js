@@ -15,7 +15,7 @@ const generateFacilitiesListString = (facilities) => {
   let result;
 
   facilities.forEach((facility, index) => {
-    const { facilityType, ukefFacilityID, bankReferenceNumber } = facility;
+    const { facilityType, ukefFacilityID, bankReferenceNumber } = facility.facilitySnapshot;
 
     const fType = capitalizeFirstLetter(facilityType);
     const listItem = `- ${fType} facility with your reference ${bankReferenceNumber} has been given the UKEF reference: ${ukefFacilityID}`;
@@ -104,13 +104,18 @@ const sendMiaAcknowledgement = async (deal) => {
     exporterName,
     bankReferenceNumber,
     ukefDealID,
-    facilitiesList: generateFacilitiesListString(deal),
+    bssList: generateFacilitiesListString(dealSnapshot.bondTransactions.items),
+    ewcsList: generateFacilitiesListString(dealSnapshot.loanTransactions.items),
   };
 
-  console.log({ emailVariables });
+  console.log({
+    templateId,
+    emailVariables,
+    deal,
+  });
   const emailResponse = await sendTfmEmail(
     templateId,
-    'andrew@foundry4.com', // sendToEmailAddress,
+    'andrew.price@foundry4.com', // sendToEmailAddress,
     emailVariables,
     deal,
   );
