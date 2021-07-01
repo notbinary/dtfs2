@@ -12,14 +12,115 @@ import {
 import validateToken from './middleware/validate-token';
 
 const router = express.Router();
-const PAGESIZE = 20;
-const primaryNav = 'dashboard';
+const PAGESIZE = 10;
+const primaryNav = 'home';
 
 router.use('/dashboard/*', validateToken);
+
+router.get('/', validateToken, (_, res) => res.redirect('/dashboard'));
 
 router.get('/dashboard', async (req, res) => {
   req.session.dashboardFilters = null;
   res.redirect('/dashboard/0');
+});
+
+router.get('/dashboard/:page', async (req, res) => {
+  const { userToken } = requestParams(req);
+
+  // when a user with checker role views the dashboard, default to status=readyForApproval
+  // when a user with maker AND checker role views the dashboard, do not default to status=readyForApproval
+  const { roles } = req.session.user;
+
+  const userisMaker = roles.includes('maker');
+  const userisChecker = roles.includes('checker');
+  const userIsMakerAndChecker = (userisMaker && userisChecker);
+
+  if (!req.session.dashboardFilters) {
+    // set some default behaviours for the filters...
+    req.session.dashboardFilters = {};
+
+    // default filter settings for a checker
+    if (userisChecker && !userIsMakerAndChecker) {
+      req.session.dashboardFilters.filterByStatus = 'readyForApproval';
+      req.session.dashboardFilters.isUsingAdvancedFilter = true;
+    }
+
+    // default to hiding abandoned deals
+    req.session.dashboardFilters.filterByShowAbandonedDeals = false;
+  }
+
+  const { isUsingAdvancedFilter, filters } = buildDashboardFilters(req.session.dashboardFilters, req.session.user);
+
+  const dealData = await getApiData(
+    api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
+    res,
+  );
+
+  const pages = {
+    totalPages: Math.ceil(dealData.count / PAGESIZE),
+    currentPage: parseInt(req.params.page, 10),
+    totalItems: dealData.count,
+  };
+
+  const contracts = [
+    ...dealData.deals.map((deal) => {
+      const newDeal = { ...deal };
+      newDeal.details.product = 'BSS/EWCS';
+      return newDeal;
+    }),
+    // TODO: add gef details and sort
+  ];
+
+  return res.render('dashboard/deals.njk', {
+    pages,
+    contracts,
+    banks: await getApiData(
+      api.banks(userToken),
+      res,
+    ),
+    successMessage: getFlashSuccessMessage(req),
+    filter: {
+      isUsingAdvancedFilter,
+      ...req.session.dashboardFilters,
+    },
+    primaryNav,
+    user: req.session.user,
+  });
+});
+
+router.post('/dashboard/:page', async (req, res) => {
+  const { userToken } = requestParams(req);
+
+  const dashboardFilters = req.body;
+  req.session.dashboardFilters = dashboardFilters;
+
+  const { isUsingAdvancedFilter, filters } = buildDashboardFilters(dashboardFilters, req.session.user);
+
+  const dealData = await getApiData(
+    api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
+    res,
+  );
+
+  const pages = {
+    totalPages: Math.ceil(dealData.count / PAGESIZE),
+    currentPage: parseInt(req.params.page, 10),
+    totalItems: dealData.count,
+  };
+
+  return res.render('dashboard/deals.njk', {
+    pages,
+    contracts: dealData.deals,
+    banks: await getApiData(
+      api.banks(userToken),
+      res,
+    ),
+    filter: {
+      isUsingAdvancedFilter,
+      ...dashboardFilters,
+    },
+    primaryNav,
+    user: req.session.user,
+  });
 });
 
 router.get('/dashboard/transactions', async (req, res) => {
@@ -92,96 +193,6 @@ router.post('/dashboard/transactions/:page', async (req, res) => {
       isUsingAdvancedFilter,
       ...req.session.transactionFilters,
     },
-    user: req.session.user,
-  });
-});
-
-router.get('/dashboard/:page', async (req, res) => {
-  const { userToken } = requestParams(req);
-
-  // when a user with checker role views the dashboard, default to status=readyForApproval
-  // when a user with maker AND checker role views the dashboard, do not default to status=readyForApproval
-  const { roles } = req.session.user;
-
-  const userisMaker = roles.includes('maker');
-  const userisChecker = roles.includes('checker');
-  const userIsMakerAndChecker = (userisMaker && userisChecker);
-
-  if (!req.session.dashboardFilters) {
-    // set some default behaviours for the filters...
-    req.session.dashboardFilters = {};
-
-    // default filter settings for a checker
-    if (userisChecker && !userIsMakerAndChecker) {
-      req.session.dashboardFilters.filterByStatus = 'readyForApproval';
-      req.session.dashboardFilters.isUsingAdvancedFilter = true;
-    }
-
-    // default to hiding abandoned deals
-    req.session.dashboardFilters.filterByShowAbandonedDeals = false;
-  }
-
-  const { isUsingAdvancedFilter, filters } = buildDashboardFilters(req.session.dashboardFilters, req.session.user);
-
-  const dealData = await getApiData(
-    api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
-    res,
-  );
-
-  const pages = {
-    totalPages: Math.ceil(dealData.count / PAGESIZE),
-    currentPage: parseInt(req.params.page, 10),
-    totalItems: dealData.count,
-  };
-
-  return res.render('dashboard/deals.njk', {
-    pages,
-    contracts: dealData.deals,
-    banks: await getApiData(
-      api.banks(userToken),
-      res,
-    ),
-    successMessage: getFlashSuccessMessage(req),
-    filter: {
-      isUsingAdvancedFilter,
-      ...req.session.dashboardFilters,
-    },
-    primaryNav,
-    user: req.session.user,
-  });
-});
-
-router.post('/dashboard/:page', async (req, res) => {
-  const { userToken } = requestParams(req);
-
-  const dashboardFilters = req.body;
-  req.session.dashboardFilters = dashboardFilters;
-
-  const { isUsingAdvancedFilter, filters } = buildDashboardFilters(dashboardFilters, req.session.user);
-
-  const dealData = await getApiData(
-    api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
-    res,
-  );
-
-  const pages = {
-    totalPages: Math.ceil(dealData.count / PAGESIZE),
-    currentPage: parseInt(req.params.page, 10),
-    totalItems: dealData.count,
-  };
-
-  return res.render('dashboard/deals.njk', {
-    pages,
-    contracts: dealData.deals,
-    banks: await getApiData(
-      api.banks(userToken),
-      res,
-    ),
-    filter: {
-      isUsingAdvancedFilter,
-      ...dashboardFilters,
-    },
-    primaryNav,
     user: req.session.user,
   });
 });
