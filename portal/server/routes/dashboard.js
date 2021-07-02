@@ -1,4 +1,5 @@
 import express from 'express';
+import orderBy from 'lodash.orderby';
 import api from '../api';
 import buildDashboardFilters from './buildDashboardFilters';
 import buildTransactionFilters from './buildTransactionFilters';
@@ -24,65 +25,90 @@ router.get('/dashboard', async (req, res) => {
   res.redirect('/dashboard/0');
 });
 
+const gefApplicationList = async (token, res) => {
+  const data = await getApiData(api.getGefApplications(token), res);
+
+  const fullList = data.map(async (application) => {
+    const { companyName } = await getApiData(api.getGefExporter(application.exporterId, token), res);
+    const { isAutomaticCover } = await getApiData(api.getGefCoverTerms(application.coverTermsId, token), res);
+
+    let coverType;
+    if (typeof isAutomaticCover === 'boolean') coverType = isAutomaticCover ? 'Automatic Inclusion Notice' : 'Manual Inclusion Notice';
+
+    return {
+      id: application._id,
+      exporter: companyName,
+      bankRef: application.bankInternalRefName,
+      product: 'GEF',
+      status: application.status,
+      type: coverType,
+      lastUpdated: application.updatedAt || application.createdAt,
+    };
+  });
+
+  return Promise.all(fullList);
+};
+
 router.get('/dashboard/:page', async (req, res) => {
   const { userToken } = requestParams(req);
 
   // when a user with checker role views the dashboard, default to status=readyForApproval
   // when a user with maker AND checker role views the dashboard, do not default to status=readyForApproval
-  const { roles } = req.session.user;
+  // const { roles } = req.session.user;
 
-  const userisMaker = roles.includes('maker');
-  const userisChecker = roles.includes('checker');
-  const userIsMakerAndChecker = (userisMaker && userisChecker);
+  // const userisMaker = roles.includes('maker');
+  // const userisChecker = roles.includes('checker');
+  // const userIsMakerAndChecker = (userisMaker && userisChecker);
 
-  if (!req.session.dashboardFilters) {
-    // set some default behaviours for the filters...
-    req.session.dashboardFilters = {};
+  // if (!req.session.dashboardFilters) {
+  //   // set some default behaviours for the filters...
+  //   req.session.dashboardFilters = {};
 
-    // default filter settings for a checker
-    if (userisChecker && !userIsMakerAndChecker) {
-      req.session.dashboardFilters.filterByStatus = 'readyForApproval';
-      req.session.dashboardFilters.isUsingAdvancedFilter = true;
-    }
+  //   // default filter settings for a checker
+  //   if (userisChecker && !userIsMakerAndChecker) {
+  //     req.session.dashboardFilters.filterByStatus = 'readyForApproval';
+  //     req.session.dashboardFilters.isUsingAdvancedFilter = true;
+  //   }
 
-    // default to hiding abandoned deals
-    req.session.dashboardFilters.filterByShowAbandonedDeals = false;
-  }
+  //   // default to hiding abandoned deals
+  //   req.session.dashboardFilters.filterByShowAbandonedDeals = false;
+  // }
 
-  const { isUsingAdvancedFilter, filters } = buildDashboardFilters(req.session.dashboardFilters, req.session.user);
+  // const { isUsingAdvancedFilter, filters } = buildDashboardFilters(req.session.dashboardFilters, req.session.user);
 
-  const dealData = await getApiData(
-    api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
+  // const dealData = await getApiData(
+  //   api.contracts(req.params.page * PAGESIZE, PAGESIZE, filters, userToken),
+  //   res,
+  // );
+
+  // const pages = {
+  //   totalPages: Math.ceil(dealData.count / PAGESIZE),
+  //   currentPage: parseInt(req.params.page, 10),
+  //   totalItems: dealData.count,
+  // };
+
+  const bssRawData = await getApiData(
+    api.contracts(0, 0, {}, userToken),
     res,
   );
 
-  const pages = {
-    totalPages: Math.ceil(dealData.count / PAGESIZE),
-    currentPage: parseInt(req.params.page, 10),
-    totalItems: dealData.count,
-  };
+  const bssData = bssRawData.deals.map((deal) => ({
+    id: deal.id,
+    exporter: deal.details.owningBank.name,
+    bankRef: deal.details.bankSupplyContractID,
+    product: 'BSS/EWCS',
+    status: deal.details.status,
+    type: deal.details.submissionType,
+    lastUpdated: deal.details.dateOfLastAction,
+  }));
 
-  const contracts = [
-    ...dealData.deals.map((deal) => {
-      const newDeal = { ...deal };
-      newDeal.details.product = 'BSS/EWCS';
-      return newDeal;
-    }),
-    // TODO: add gef details and sort
-  ];
+  const gefData = await gefApplicationList(userToken, res);
+
+  const applications = [...bssData, ...gefData];
 
   return res.render('dashboard/deals.njk', {
-    pages,
-    contracts,
-    banks: await getApiData(
-      api.banks(userToken),
-      res,
-    ),
+    applications: orderBy(applications, ['lastUpdated', 'bankRef'], ['desc', 'asc']),
     successMessage: getFlashSuccessMessage(req),
-    filter: {
-      isUsingAdvancedFilter,
-      ...req.session.dashboardFilters,
-    },
     primaryNav,
     user: req.session.user,
   });

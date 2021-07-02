@@ -35,54 +35,46 @@
 
     <section class="govuk-tabs__panel">
 
-    {{ dashboardFilters.render(filter, user, banks) }}
+    {# {{ dashboardFilters.render(filter, user, banks) }} #}
 
       <table class="govuk-table govuk-!-margin-bottom-0">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-          {% if user.bank.id == "*" %}
-            <th scope="col" class="govuk-table__header" data-cy="table-header-bank">Exporter</th>
-          {% endif %}
+            <th scope="col" class="govuk-table__header">Exporter</th>
             <th scope="col" class="govuk-table__header">Bank ref</th>
             <th scope="col" class="govuk-table__header">Product</th>
             <th scope="col" class="govuk-table__header">Type</th>
             <th scope="col" class="govuk-table__header">Status</th>
-            <th scope="col" class="govuk-table__header">Tasks</th>
             <th scope="col" class="govuk-table__header">Last updated</th>
           </tr>
         </thead>
 
         <tbody class="govuk-table__body">
 
-          {% for contract in contracts %}
-            <tr data-cy="deal_{{contract._id}}" class="govuk-table__row govuk-body-s">
-            {% if user.bank.id == "*" %}
+          {% for application in applications %}
+            <tr data-cy="deal_{{ application.id }}" class="govuk-table__row govuk-body-s">
               <td data-cy="deal--exporter" class="govuk-table__cell">
-                {{ contract.details.owningBank.name }}
+                {{ application.exporter }}
               </td>
-            {% endif %}
+
               <td data-cy="bankSupplyContractID" class="govuk-table__cell">
-                <a href="/contract/{{ contract._id }}" class="govuk-link" data-cy="bankSupplyContractIDLink">{{ contract.details.bankSupplyContractID }}</a>
+                <a href="/contract/{{ application.id }}" class="govuk-link" data-cy="bankSupplyContractIDLink">{{ application.bankRef }}</a>
               </td>
 
               <td data-cy="deal--product" class="govuk-table__cell">
-                {{ contract.details.product }}
+                {{ application.product }}
               </td>
 
               <td data-cy="deal--type" class="govuk-table__cell">
-                {{ contract.details.submissionType or "-" }}
+                {{ application.type or "-" }}
               </td>
 
               <td data-cy="deal--status" class="govuk-table__cell">
-                {{ contract.details.status }}
-              </td>
-
-              <td data-cy="deal--tasks" class="govuk-table__cell">
-                {{ contract.details.tasks or "-" }}
+                {{ application.status }}
               </td>
 
               <td data-cy="updated" class="govuk-table__cell">
-                {{ contract.details.dateOfLastAction | localiseTimestamp("DD/MM/YYYY HH:mm", user.timezone) }}
+                {{ application.lastUpdated | localiseTimestamp("DD/MM/YYYY HH:mm", user.timezone) }}
               </td>
 
             </tr>
@@ -92,7 +84,7 @@
 
       </table>
 
-      {{ pagination.pagination(totalPages = pages.totalPages, currentPage = pages.currentPage, totalItems = pages.totalItems, paginationRoot = '/dashboard') }}
+      {# {{ pagination.pagination(totalPages = pages.totalPages, currentPage = pages.currentPage, totalItems = pages.totalItems, paginationRoot = '/dashboard') }} #}
 
     </section>
 

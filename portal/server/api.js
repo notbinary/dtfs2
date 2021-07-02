@@ -619,6 +619,44 @@ const createFeedback = async (formData, token) => {
   return response.data;
 };
 
+const getGefApplications = async (token) => {
+  const response = await axios({
+    method: 'get',
+    url: `${urlRoot}/v1/gef/application/`,
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data && response.data.items;
+};
+
+const getGefExporter = async (exporterId, token) => {
+  const response = await axios({
+    method: 'get',
+    url: `${urlRoot}/v1/gef/exporter/${exporterId}`,
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data && response.data.details;
+};
+
+const getGefCoverTerms = async (coverTermsId, token) => {
+  const response = await axios({
+    method: 'get',
+    url: `${urlRoot}/v1/gef/cover-terms/${coverTermsId}`,
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data;
+};
 
 export default {
   banks,
@@ -662,4 +700,7 @@ export default {
   downloadFile,
   mga,
   downloadMga,
+  getGefApplications,
+  getGefExporter,
+  getGefCoverTerms,
 };
