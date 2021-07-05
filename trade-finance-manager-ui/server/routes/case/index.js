@@ -1,8 +1,10 @@
 import express from 'express';
+import multer from 'multer';
 import caseController from '../../controllers/case';
 import underwritingController from '../../controllers/case/underwriting';
 import activityController from '../../controllers/case/activity';
 
+const upload = multer();
 const router = express.Router();
 
 router.get('/:_id/deal', caseController.getCaseDeal);
@@ -57,6 +59,7 @@ router.post('/:_id/underwriting/managers-decision/edit', underwritingController.
 
 
 router.get('/:_id/documents', caseController.getCaseDocuments);
-
+router.get('/:_id/documents/add', caseController.getCaseDocumentsAdd);
+router.post('/:_id/documents/add/upload', upload.any(), caseController.postCaseDocumentsAddApi);
 
 export default router;

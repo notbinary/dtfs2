@@ -130,6 +130,10 @@ const updateUnderwriterManagersDecision = async (dealId, update) => {
   return response;
 };
 
+const uploadToFilestore = async ({ dealId }, files, token) => {
+  console.log('uploadToFilestore', { files });
+};
+
 // Temp login for mock users. Active Directory will proabably replace this
 // Just get the user, not really concerned about logging in with passwords for mock users
 const login = async (username) => {
@@ -160,5 +164,6 @@ export default {
   updateLossGivenDefault,
   updateProbabilityOfDefault,
   updateUnderwriterManagersDecision,
+  uploadToFilestore,
   login,
 };

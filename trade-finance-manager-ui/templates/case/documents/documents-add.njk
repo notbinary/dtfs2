@@ -1,0 +1,61 @@
+{% extends "case/case.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "govuk/components/file-upload/macro.njk" import govukFileUpload -%}
+{%- from "moj/components/multi-file-upload/macro.njk" import mojMultiFileUpload -%}
+
+{% block sub_content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h2 class="govuk-heading-xl govuk-!-margin-top-6" data-cy="documents-heading">Add documents</h2>
+      
+      {% set uploadHtml %}
+        {{ govukFileUpload({
+          id: "documents",
+          name: "documents",
+          classes: 'moj-multi-file-upload__input',
+          label: {
+            text: "Upload a file",
+            classes: 'govuk-label--m'
+          },
+          attributes: { multiple: '' },
+          errorMessage: errorMessage
+        }) }}
+
+        {{govukButton({
+          text: 'Upload file',
+          classes: 'govuk-button--secondary moj-multi-file-upload__button'
+        })}}
+      {% endset %}
+
+      {{ mojMultiFileUpload({
+        uploadedFiles: {
+          heading: { text: 'Files added' },
+          items: uploadedFiles
+        },
+        uploadHtml: uploadHtml
+      }) }}
+
+
+        <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue",
+          href: "#"
+        }) }}
+
+        <a  class="govuk-link" href="../documents" data-cy="estore-link">Cancel</a>
+      </div>
+    </div>
+  </div>
+  <script>
+
+  window.onload = () => {
+    if(typeof window.MOJFrontend.MultiFileUpload !== 'undefined') {
+      new window.MOJFrontend.MultiFileUpload({
+      container: $('.moj-multi-file-upload'),
+      uploadUrl: './add/upload',
+      deleteUrl: ''
+      });
+    }
+  }
+  </script>
+{% endblock %}

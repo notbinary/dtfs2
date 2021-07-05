@@ -20,6 +20,7 @@ module.exports = {
   entry: {
     main: './scripts/main.js',
     govukFrontend: './scripts/govuk-frontend.js',
+    mojFrontend: './scripts/moj-frontend.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
