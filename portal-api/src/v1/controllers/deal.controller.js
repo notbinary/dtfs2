@@ -9,82 +9,38 @@ const calculateDealSummary = require('../deal-summary');
 const { findEligibilityCriteria } = require('./eligibilityCriteria.controller');
 const api = require('../api');
 
-const dealsQuery = (user, filter) => {
+const dealsFilters = (user, filters = []) => {
+  const sanitisedFilters = [...filters];
+
   // add the bank clause if we're not a superuser
   if (!isSuperUser(user)) {
-    filter.push({ 'details.owningBank.id': { $eq: user.bank.id } });
+    sanitisedFilters.push({ 'exporter._id': user.bank.id });
   }
 
-  // swap out the 'details.bankSupplyContractID' for an equivalent regex
-  //  [dw] rushing a bit, but my instinct is that if we have to do this,
-  //       we likely should be fixing this in the portal so we send a
-  //       $regex query in the first instance, but i could be wrong.
-  const amendedFilters = filter.map((clause) => {
-    if (clause.freetextSearch) {
-      const { freetextSearch } = clause;
-      return {
-        $or: [
-          { 'details.bankSupplyContractID': { $regex: freetextSearch, $options: 'i' } },
-          { 'details.ukefDealId': { $regex: freetextSearch, $options: 'i' } },
-          { 'bondTransactions.items.uniqueIdentificationNumber': { $regex: freetextSearch, $options: 'i' } },
-          { 'submissionDetails.supplier-name': { $regex: freetextSearch, $options: 'i' } },
-          { 'submissionDetails.supplier-companies-house-registration-number': { $regex: freetextSearch, $options: 'i' } },
-          { 'submissionDetails.indemnifier-name': { $regex: freetextSearch, $options: 'i' } },
-          { 'submissionDetails.indemnifier-companies-house-registration-number': { $regex: freetextSearch, $options: 'i' } },
-          { 'submissionDetails.buyer-name': { $regex: freetextSearch, $options: 'i' } },
-        ],
-      };
-    }
-
-    if (clause['transaction.status']) {
-      const bondMatchesOnFacilityStage = { 'bondTransactions.items': { $elemMatch: { status: clause['transaction.status'] } } };
-      const loanMatchesOnFacilityStage = { 'loanTransactions.items': { $elemMatch: { status: clause['transaction.status'] } } };
-      return { $or: [bondMatchesOnFacilityStage, loanMatchesOnFacilityStage] };
-    }
-
-    if (clause['details.bankSupplyContractID']) {
-      const bankSupplyContractID = clause['details.bankSupplyContractID'];
-      return {
-        $or: [
-          { 'details.bankSupplyContractID': { $regex: bankSupplyContractID, $options: 'i' } },
-        ],
-      };
-    }
-
-    if (clause['details.ukefDealId']) {
-      const ukefDealId = clause['details.ukefDealId'];
-      return {
-        $or: [
-          { 'details.ukefDealId': { $regex: ukefDealId, $options: 'i' } },
-        ],
-      };
-    }
-
-    return clause;
-  });
+  // TODO: some transformations may be needed for certain filters, such as general keyword filter
 
   let result = {};
-  if (amendedFilters.length === 1) {
-    result = amendedFilters.pop(); // lint didn't like filter[0]..
-  } else if (amendedFilters.length > 1) {
+  if (sanitisedFilters.length === 1) {
+    [result] = sanitisedFilters;
+  } else if (sanitisedFilters.length > 1) {
     result = {
-      $and: amendedFilters,
+      $and: sanitisedFilters,
     };
   }
 
   return result;
 };
 
-const findDeals = async (requestingUser, filter) => {
-  const query = dealsQuery(requestingUser, filter);
-  return api.queryDeals(query);
+const findDeals = async (requestingUser, filters, sort) => {
+  const sanitisedFilters = dealsFilters(requestingUser, filters, sort);
+  return api.queryDeals(sanitisedFilters, sort);
 };
 
 exports.findDeals = findDeals;
 
-const findPaginatedDeals = async (requestingUser, start = 0, pagesize = 20, filter) => {
-  const query = dealsQuery(requestingUser, filter);
-  return api.queryDeals(query, start, pagesize);
+const findPaginatedDeals = async (requestingUser, start = 0, pagesize = 20, filters, sort) => {
+  const sanitisedFilters = dealsFilters(requestingUser, filters);
+  return api.queryDeals(sanitisedFilters, sort, start, pagesize);
 };
 exports.findPaginatedDeals = findPaginatedDeals;
 
