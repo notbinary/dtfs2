@@ -189,7 +189,10 @@ const queryAllDeals = async (filters = {}, sort = {}, start = 0, pagesize = 0) =
   ])
     .toArray();
 
-  return deals;
+  return {
+    count: deals.length,
+    deals,
+  };
 };
 
 exports.queryAllDeals = async (req, res) => {
