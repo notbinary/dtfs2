@@ -60,11 +60,12 @@ const resetPasswordFromToken = async (resetPwdToken, formData) => {
   };
 };
 
-const contracts = async (start, pagesize, filters, token) => {
+const contracts = async (start, pagesize, filters, token, sort) => {
   const params = {
     start,
     pagesize,
     filters,
+    sort,
   };
 
   const response = await apollo('GET', dealsQuery, params, token);

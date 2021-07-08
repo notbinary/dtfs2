@@ -51,30 +51,30 @@
 
         <tbody class="govuk-table__body">
 
-          {% for application in applications %}
-            <tr data-cy="deal_{{ application.id }}" class="govuk-table__row govuk-body-s">
+          {% for deal in deals %}
+            <tr data-cy="deal_{{ deal.id }}" class="govuk-table__row govuk-body-s">
               <td data-cy="deal--exporter" class="govuk-table__cell">
-                {{ application.exporter }}
+                {{ deal.exporter }}
               </td>
 
               <td data-cy="bankSupplyContractID" class="govuk-table__cell">
-                <a href="/contract/{{ application.id }}" class="govuk-link" data-cy="bankSupplyContractIDLink">{{ application.bankRef }}</a>
+                <a href="/contract/{{ deal.id }}" class="govuk-link" data-cy="bankSupplyContractIDLink">{{ deal.bankRef }}</a>
               </td>
 
               <td data-cy="deal--product" class="govuk-table__cell">
-                {{ application.product }}
+                {{ deal.product }}
               </td>
 
               <td data-cy="deal--type" class="govuk-table__cell">
-                {{ application.type or "-" }}
+                {{ deal.type or "-" }}
               </td>
 
               <td data-cy="deal--status" class="govuk-table__cell">
-                {{ application.status }}
+                {{ deal.status }}
               </td>
 
               <td data-cy="updated" class="govuk-table__cell">
-                {{ application.lastUpdated | localiseTimestamp("DD/MM/YYYY HH:mm", user.timezone) }}
+                {{ deal.lastUpdated | localiseTimestamp("DD/MM/YYYY HH:mm", user.timezone) }}
               </td>
 
             </tr>
@@ -84,7 +84,7 @@
 
       </table>
 
-      {# {{ pagination.pagination(totalPages = pages.totalPages, currentPage = pages.currentPage, totalItems = pages.totalItems, paginationRoot = '/dashboard') }} #}
+      {{ pagination.pagination(totalPages = pages.totalPages, currentPage = pages.currentPage, totalItems = pages.totalItems, paginationRoot = '/dashboard') }}
 
     </section>
 
