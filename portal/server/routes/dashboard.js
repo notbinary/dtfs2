@@ -6,7 +6,7 @@ import {
   requestParams,
   getFlashSuccessMessage,
 } from '../helpers';
-import { dealsDashboard } from '../controllers/dashboard';
+import dealsDashboard from '../controllers/dashboard';
 
 import validateToken from './middleware/validate-token';
 
@@ -16,7 +16,7 @@ const primaryNav = 'home';
 
 router.use('/dashboard/*', validateToken);
 
-router.get('/', validateToken, (_, res) => res.redirect('/dashboard'));
+router.get('/', validateToken, (_, res) => res.redirect('/dashboard/0'));
 
 router.get('/dashboard', async (req, res) => {
   req.session.dashboardFilters = null;

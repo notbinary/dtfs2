@@ -6,7 +6,7 @@ import {
   getFlashSuccessMessage,
 } from '../../helpers';
 
-const PAGESIZE = 10;
+const PAGESIZE = 20;
 const primaryNav = 'home';
 
 const dealsDashboard = async (req, res) => {

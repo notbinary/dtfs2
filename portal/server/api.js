@@ -121,7 +121,7 @@ const updateDealName = async (id, newName, token) => {
 const updateDealStatus = async (statusUpdate, token) => {
   const response = await axios({
     method: 'put',
-    url: `${urlRoot}/v1/deals/${statusUpdate._id}/status`, // eslint-disable-line no-underscore-dangle
+    url: `${urlRoot}/v1/deals/${statusUpdate._id}/status`,
     headers: {
       Authorization: token,
       'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const updateDealStatus = async (statusUpdate, token) => {
 const getSubmissionDetails = async (id, token) => {
   const response = await axios({
     method: 'get',
-    url: `${urlRoot}/v1/deals/${id}/submission-details`, // eslint-disable-line no-underscore-dangle
+    url: `${urlRoot}/v1/deals/${id}/submission-details`,
     headers: {
       Authorization: token,
       'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ const getSubmissionDetails = async (id, token) => {
 const updateSubmissionDetails = async (deal, submissionDetails, token) => {
   const response = await axios({
     method: 'put',
-    url: `${urlRoot}/v1/deals/${deal._id}/submission-details`, // eslint-disable-line no-underscore-dangle
+    url: `${urlRoot}/v1/deals/${deal._id}/submission-details`,
     headers: {
       Authorization: token,
       'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const updateSubmissionDetails = async (deal, submissionDetails, token) => {
 const cloneDeal = async (dealId, newDealData, token) => {
   const response = await axios({
     method: 'post',
-    url: `${urlRoot}/v1/deals/${dealId}/clone`, // eslint-disable-line no-underscore-dangle
+    url: `${urlRoot}/v1/deals/${dealId}/clone`,
     headers: {
       Authorization: token,
       'Content-Type': 'application/json',
