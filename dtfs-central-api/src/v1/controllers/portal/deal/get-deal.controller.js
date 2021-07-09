@@ -122,14 +122,12 @@ const queryAllDeals = async (filters = {}, sort = {}, start = 0, pagesize = 0) =
           {
             $project: {
               _id: 1,
+              bankId: '$details.owningBank.id',
               bankRef: '$details.bankSupplyContractName',
               status: '$details.status',
               product: 'BSS/EWCS',
               type: '$details.submissionType',
-              exporter: {
-                _id: '$details.owningBank.id',
-                name: '$details.owningBank.name',
-              },
+              exporter: '$submissionDetails.supplier-name',
               lastUpdate: { $convert: { input: '$details.dateOfLastAction', to: 'double' } },
             },
           },
@@ -163,14 +161,12 @@ const queryAllDeals = async (filters = {}, sort = {}, start = 0, pagesize = 0) =
           {
             $project: {
               _id: 1,
-              bnakRef: 1,
+              bankRef: '$bankInternalRefName',
+              bankId: null, // TODO: need to get the bank ID for GEF deals somehow
               status: 1,
               product: 'GEF',
               type: '$coverTerms._id',
-              exporter: {
-                _id: 1,
-                name: '$exporter.companyName',
-              },
+              exporter: '$exporter.companyName',
               lastUpdate: { $ifNull: ['$updatedAt', '$createdAt'] },
             },
           },
