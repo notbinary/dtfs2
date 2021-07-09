@@ -22,8 +22,6 @@ const findOneDeal = async (dealId) => {
 };
 
 const queryDeals = async (filters, sort, start = 0, pagesize = 0) => {
-  console.log({ filters });
-
   try {
     const response = await axios({
       method: 'get',
