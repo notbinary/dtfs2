@@ -180,15 +180,18 @@ const queryAllDeals = async (filters = {}, sort = {}, start = 0, pagesize = 0) =
     { $replaceRoot: { newRoot: '$union' } },
     { $match: filters },
     { $sort: { ...sort, lastUpdate: -1 } },
-    { $skip: start },
-    ...pagesize ? [{ $limit: pagesize }] : [],
+    {
+      $facet: {
+        count: [{ $count: 'total' }],
+        deals: [{ $skip: start }, ...pagesize ? [{ $limit: pagesize }] : []],
+      },
+    },
+    { $unwind: '$count' },
+    { $project: { count: '$count.total', deals: 1 } },
   ])
     .toArray();
 
-  return {
-    count: deals.length,
-    deals,
-  };
+  return deals[0];
 };
 
 exports.queryAllDeals = async (req, res) => {
