@@ -15,8 +15,6 @@ const queryDeals = async (_, { params = {} }, ctx) => {
     ? await findPaginatedDeals(ctx.user, start, pagesize, dbFilters, sort)
     : await findDeals(ctx.user, dbFilters, sort);
 
-  console.log({ deals });
-
   return deals;
 };
 

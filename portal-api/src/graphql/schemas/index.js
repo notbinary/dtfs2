@@ -32,16 +32,11 @@ type ErrorListItem {
   text: String
 }
 
-type Exporter {
-  _id: String
-  name: String
-}
-
 type Deal {
   _id: String!
   status: String
   bankRef: String
-  exporter: Exporter
+  exporter: String
   product: String
   type: String
   lastUpdate: Float

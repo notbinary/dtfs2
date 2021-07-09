@@ -14,7 +14,7 @@ const dealsFilters = (user, filters = []) => {
 
   // add the bank clause if we're not a superuser
   if (!isSuperUser(user)) {
-    sanitisedFilters.push({ 'exporter._id': user.bank.id });
+    sanitisedFilters.push({ bankId: user.bank.id });
   }
 
   // TODO: some transformations may be needed for certain filters, such as general keyword filter
