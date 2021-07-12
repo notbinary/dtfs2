@@ -162,10 +162,10 @@ const queryAllDeals = async (filters = {}, sort = {}, start = 0, pagesize = 0) =
             $project: {
               _id: 1,
               bankRef: '$bankInternalRefName',
-              bankId: null, // TODO: need to get the bank ID for GEF deals somehow
+              bankId: 1,
               status: 1,
               product: 'GEF',
-              type: '$coverTerms._id',
+              type: '-', // TODO: add handling for GEF cover terms once field is available
               exporter: '$exporter.companyName',
               lastUpdate: { $ifNull: ['$updatedAt', '$createdAt'] },
             },
