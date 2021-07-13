@@ -43,6 +43,7 @@ type Deal {
 }
 
 type DealsQuery {
+  status: StatusType
   count: Int
   deals: [Deal]
 }
