@@ -5,5 +5,7 @@
   "dealApiPort": "5001",
   "projectId": "f1ud6y",
   "testFiles": "**/*.spec.js",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "responseTimeout": 200000,
+  "pageLoadTimeout": 200000
 }
