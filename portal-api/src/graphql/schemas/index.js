@@ -32,32 +32,25 @@ type ErrorListItem {
   text: String
 }
 
-type DealDetails {
-  status: String
-  bankSupplyContractID: String
-  bankSupplyContractName: String
-  ukefDealId: String
-  submissionType: String
-  maker: Maker
-  checker: Checker
-  checkerMIN: Checker
-  dateOfLastAction: String
-  submissionDate: String
-  approvalDate: String
-  created: String
-  workflowStatus: String
-  owningBank: OwningBank
-}
-
 type Deal {
   _id: String!
-  details: DealDetails
+  status: String
+  bankRef: String
+  exporter: String
+  product: String
+  type: String
+  lastUpdate: Float
 }
 
 type DealsQuery {
   status: StatusType
-  count: Int,
+  count: Int
   deals: [Deal]
+}
+
+input DashboardSort {
+  field: String
+  order: Int
 }
 
 input DashboardFilters {
@@ -67,9 +60,10 @@ input DashboardFilters {
 }
 
 input DealsInput {
-  start: Int,
-  pagesize: Int,
+  start: Int
+  pagesize: Int
   filters: [DashboardFilters]
+  sort: [DashboardSort]
 }
 
 type Transaction {
@@ -102,7 +96,7 @@ type Transaction {
 }
 
 type TransactionQuery {
-  count: Int,
+  count: Int
   transactions: [Transaction]
 }
 
@@ -113,8 +107,8 @@ input TransactionFilters {
 }
 
 input TransactionInput {
-  start: Int,
-  pagesize: Int,
+  start: Int
+  pagesize: Int
   filters: [TransactionFilters]
 }
 
@@ -126,7 +120,7 @@ type Query {
 }
 
 type DealStatusErrorItem {
-  comments: ErrorListItem,
+  comments: ErrorListItem
   confirmSubmit: ErrorListItem
 }
 

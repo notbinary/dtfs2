@@ -285,7 +285,7 @@ const listCountries = async (token) => {
 
 const listDeals = async (token) => {
   const response = await apollo('GET', QUERY.dealsQuery, {}, token);
-  return response.data.deals.deals;
+  return response.data.deals.deals.filter((deal) => deal.product === 'BSS/EWCS');
 };
 
 

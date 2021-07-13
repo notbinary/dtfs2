@@ -3,6 +3,7 @@ query {
   deals {
     deals{
       _id
+      product
     }
   }
 }`;

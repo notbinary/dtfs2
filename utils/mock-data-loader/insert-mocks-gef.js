@@ -36,9 +36,7 @@ const insertMocks = async () => {
 
   console.log('update exporter information');
   for (const [index, item] of MOCKS.EXPORTER.entries()) {
-    if (index > 0) {
-      await api.updateExporter(application[index].exporterId, item, token);
-    }
+    await api.updateExporter(application[index].exporterId, item, token);
   }
 
   console.log('inserting and updating facilities information');

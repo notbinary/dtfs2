@@ -21,16 +21,17 @@ const findOneDeal = async (dealId) => {
   }
 };
 
-const queryDeals = async (query, start = 0, pagesize = 0) => {
+const queryDeals = async (filters, sort, start = 0, pagesize = 0) => {
   try {
     const response = await axios({
-      method: 'post',
-      url: `${urlRoot}/v1/portal/deals/query`,
+      method: 'get',
+      url: `${urlRoot}/v1/portal/deals`,
       headers: {
         'Content-Type': 'application/json',
       },
       data: {
-        query,
+        filters,
+        sort,
         start,
         pagesize,
       },
@@ -38,6 +39,7 @@ const queryDeals = async (query, start = 0, pagesize = 0) => {
 
     return response.data;
   } catch (err) {
+    console.log(err);
     return false;
   }
 };
