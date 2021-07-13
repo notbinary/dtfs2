@@ -52,16 +52,16 @@
         <tbody class="govuk-table__body">
 
           {% for deal in deals %}
-            <tr data-cy="deal_{{ deal.id }}" class="govuk-table__row govuk-body-s">
+            <tr data-cy="deal_{{ deal._id }}" class="govuk-table__row govuk-body-s">
               <td data-cy="deal--exporter" class="govuk-table__cell">
                 {{ deal.exporter }}
               </td>
 
-              <td data-cy="bankSupplyContractID" class="govuk-table__cell">
+              <td data-cy="deal--bankRef" class="govuk-table__cell">
                 {% set path = '/gef/application-details/' if deal.product === "GEF" else "/contract/" %}
                 <a
                   href="{{ path }}{{ deal._id }}"
-                  class="govuk-link"
+                  class="deal--link"
                   data-cy="bankSupplyContractIDLink"
                 >
                   {{ deal.bankRef }}
